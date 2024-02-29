@@ -1,0 +1,72 @@
+﻿[
+  {
+    "TenMH": "Hóa học",
+    "MaMH": "MH003",
+    "RateDTP": 0.3,
+    "RateDQT": 0.7,
+    "SoTiet": 3
+  },
+  {
+    "TenMH": "Sinh học",
+    "MaMH": "MH004",
+    "RateDTP": 0.4,
+    "RateDQT": 0.6,
+    "SoTiet": 5
+  },
+  {
+    "TenMH": "Lịch sử",
+    "MaMH": "MH005",
+    "RateDTP": 0.2,
+    "RateDQT": 0.8,
+    "SoTiet": 4
+  },
+  {
+    "TenMH": "Địa lý",
+    "MaMH": "MH006",
+    "RateDTP": 0.3,
+    "RateDQT": 0.7,
+    "SoTiet": 4
+  },
+  {
+    "TenMH": "Văn học",
+    "MaMH": "MH007",
+    "RateDTP": 0.4,
+    "RateDQT": 0.6,
+    "SoTiet": 3
+  },
+  {
+    "TenMH": "Ngoại ngữ",
+    "MaMH": "MH008",
+    "RateDTP": 0.3,
+    "RateDQT": 0.7,
+    "SoTiet": 3
+  },
+  {
+    "TenMH": "Giáo dục công dân",
+    "MaMH": "MH009",
+    "RateDTP": 0.2,
+    "RateDQT": 0.8,
+    "SoTiet": 5
+  },
+  {
+    "TenMH": "Công nghệ",
+    "MaMH": "MH010",
+    "RateDTP": 0.4,
+    "RateDQT": 0.6,
+    "SoTiet": 5
+  },
+  {
+    "TenMH": "Thể dục",
+    "MaMH": "MH001",
+    "RateDTP": 0.3,
+    "RateDQT": 0.7,
+    "SoTiet": 3
+  },
+  {
+    "TenMH": "Âm nhạc",
+    "MaMH": "MH002",
+    "RateDTP": 0.2,
+    "RateDQT": 0.8,
+    "SoTiet": 4
+  }
+]

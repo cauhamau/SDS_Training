@@ -1,0 +1,196 @@
+﻿
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Practice1_QLSV.Lib;
+using Syntax.Lib;
+using System;
+using System.CodeDom.Compiler;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection.Emit;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Practice1_QLSV
+{
+    class Program
+    {
+
+        static void Main(string[] args)
+        {
+            Console.OutputEncoding = Encoding.UTF8;
+            string json_SinhVien = File.ReadAllText("../../Data/Sinhvien.json");
+            DanhSachSV danhSachSV = new DanhSachSV();
+            danhSachSV.ListSV = JsonConvert.DeserializeObject<List<Sinhvien>>(json_SinhVien, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+
+            string json_MonHoc = File.ReadAllText("../../Data/Monhoc.json");
+            DanhSachMH danhSachMH = new DanhSachMH();
+            danhSachMH.ListMH = JsonConvert.DeserializeObject<List<Monhoc>>(json_MonHoc);
+
+            string json_MonDangKy = File.ReadAllText("../../Data/Mondanky.json");
+            DanhSachMonDangKy danhSachMonDangKy = new DanhSachMonDangKy();
+            danhSachMonDangKy.ListMonDangKy = JsonConvert.DeserializeObject<List<MonDangKy>>(json_MonDangKy);
+
+
+
+            int choice = 1;
+            while (choice != 0)
+            {
+                Console.WriteLine("----------Chức năng----------");
+                Console.WriteLine("1. Xem danh sách sinh viên.");
+                Console.WriteLine("2. Xem chi tiết sinh viên.");
+                Console.WriteLine("3. Xem số môn học sinh viên đăng ký.");
+                Console.WriteLine("4. Xem điểm môn học của sinh viên.");
+                Console.WriteLine("5. Nhập điểm sinh viên.");
+                Console.WriteLine("6. Xem kết quả trượt đỗ của sinh viên.");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write("Nhập chức năng: ");
+                Console.ResetColor();
+                choice = int.Parse(Console.ReadLine());
+                Console.WriteLine(choice);
+                int MSSV;
+                string MaMH;
+                switch (choice)
+                {
+                    case 0:
+                        Console.WriteLine("Chương trình kết thúc.");
+                        break;
+                    case 1:
+                        danhSachSV.XuatDanhSachSV();
+                        break;
+                    case 2:
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.Write("Nhập mã sinh viên để xem thông tin: ");
+                        Console.ResetColor();
+                        danhSachSV.ChiTietSV(int.Parse(Console.ReadLine()));
+                        break;
+                    case 3:
+                        danhSachMH.XuatDanhSachMH();
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.Write("Nhập MSSV cần xem số môn học đăng ký:  ");
+                        Console.ResetColor();
+                        danhSachMonDangKy.SoMonHocSinhVienDangKy(int.Parse(Console.ReadLine()));
+                        break;
+                    case 4:
+                        while (true)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                            Console.Write("Nhập mã sinh viên cần xem điểm: ");
+                            MSSV = int.Parse(Console.ReadLine());
+                            Console.ResetColor();
+                            if (danhSachSV.ListSV.SingleOrDefault(x => x.MSSV == MSSV) == null)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Không tìm thấy sinh viên, vui lòng nhập lại");
+                                Console.ResetColor();
+                            }
+                            else break;
+                        }
+
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine("{0,-20} {1,-20} {2,-20} {3,-20}", "Tên môn học", "Điểm quá trình", "Điểm thành phần", "Điểm tổng kết");
+                        Console.ResetColor();
+                        List<MonDangKy> ListMonDK = danhSachMonDangKy.ListMonDangKy.Where(x => x.MSSV == MSSV).ToList();
+                        foreach (MonDangKy item in ListMonDK)
+                        {
+                            Console.WriteLine("{0,-20} {1,-20} {2,-20} {3,-20}", danhSachMH.ListMH.SingleOrDefault(x => x.MaMH == item.MaMH).TenMH, item.DQT, item.DTP, Math.Round((item.DQT + item.DTP) / 2, 2));
+                        }
+                        break;
+                    case 5:
+                        //Kiem tra MSSV
+                        string write_json;
+
+                        while (true)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                            Console.Write("Nhập mã sinh viên cần nhập điểm: ");
+                            MSSV = int.Parse(Console.ReadLine());
+                            Console.ResetColor();
+                            if (danhSachSV.ListSV.SingleOrDefault(x => x.MSSV == MSSV) == null)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Không tìm thấy sinh viên, vui lòng nhập lại");
+                                Console.ResetColor();
+                            }
+                            else break;
+                        }
+                        //Kiem tra Ma mon hoc
+                        while (true)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                            Console.Write("Nhập mã môn học cần nhập điểm: ");
+                            MaMH = Console.ReadLine();
+                            Console.ResetColor();
+                            if (danhSachMH.ListMH.SingleOrDefault(x => x.MaMH == MaMH) == null)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Không tìm thấy môn học, vui lòng nhập lại");
+                                Console.ResetColor();
+                            }
+                            else if (danhSachMonDangKy.ListMonDangKy.Where(x => (x.MaMH == MaMH) && (x.MSSV == MSSV)).Count() == 0)
+                            {
+                                danhSachMonDangKy.NhapDiemSinhVien(MSSV, MaMH);
+                                break;
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Môn học đã nhập điểm.");
+                                Console.ResetColor();
+                                break;
+                            }
+
+                        }
+                        write_json = JsonConvert.SerializeObject(danhSachMonDangKy.ListMonDangKy.ToArray(), Formatting.Indented);
+                        File.WriteAllText("../../Data/Mondanky.json", write_json);
+                        Console.WriteLine("Đã nhập");
+                        break;
+                    case 6:
+                        while (true)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                            Console.Write("Nhập mã sinh viên cần xem kết quả: ");
+                            MSSV = int.Parse(Console.ReadLine());
+                            Console.ResetColor();
+                            if (danhSachSV.ListSV.SingleOrDefault(x => x.MSSV == MSSV) == null)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Không tìm thấy sinh viên, vui lòng nhập lại");
+                                Console.ResetColor();
+                            }
+                            else break;
+                        }
+
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine("{0,-20} {1,-20} {2,-20} {3,-20} {4,-20}", "Tên môn học", "Điểm quá trình", "Điểm thành phần", "Điểm tổng kết", "Kết quả");
+                        Console.ResetColor();
+                        List<MonDangKy> ListKetQua = danhSachMonDangKy.ListMonDangKy.Where(x => x.MSSV == MSSV).ToList();
+                        double DiemTongKet;
+                        foreach (MonDangKy item in ListKetQua)
+                        {
+                            DiemTongKet = Math.Round((item.DQT + item.DTP) / 2, 2);
+                            if (DiemTongKet >= 4)
+                            {
+                                Console.WriteLine("{0,-20} {1,-20} {2,-20} {3,-20} {4,-20}", danhSachMH.ListMH.SingleOrDefault(x => x.MaMH == item.MaMH).TenMH, item.DQT, item.DTP, DiemTongKet, "Đỗ");
+                            }
+                            else
+                            {
+                                Console.WriteLine("{0,-20} {1,-20} {2,-20} {3,-20} {4,-20}", danhSachMH.ListMH.SingleOrDefault(x => x.MaMH == item.MaMH).TenMH, item.DQT, item.DTP, DiemTongKet, "Trượt");
+                            }
+
+                        }
+                        break;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Nhập sai vui lòng nhập lại.");
+                        Console.ResetColor();
+                        break;
+                }
+            }
+        }
+
+    }
+
+}

@@ -1,0 +1,162 @@
+﻿[
+  {
+    "MSSV": "2024001",
+    "TenSV": "Nguyen Van A",
+    "Gioitinh": "Nam",
+    "Ngaysinh": "01/01/2000",
+    "Lop": "K60",
+    "Khoa": "2020"
+  },
+  {
+    "MSSV": "2024002",
+    "TenSV": "Tran Thi B",
+    "Gioitinh": "Nữ",
+    "Ngaysinh": "02/02/2001",
+    "Lop": "K61",
+    "Khoa": "2021"
+  },
+  {
+    "MSSV": "2024003",
+    "TenSV": "Pham Van C",
+    "Gioitinh": "Nam",
+    "Ngaysinh": "03/03/2002",
+    "Lop": "K62",
+    "Khoa": "2022"
+  },
+  {
+    "MSSV": "2024004",
+    "TenSV": "Le Thi D",
+    "Gioitinh": "Nữ",
+    "Ngaysinh": "04/04/2003",
+    "Lop": "K63",
+    "Khoa": "2023"
+  },
+  {
+    "MSSV": "2024005",
+    "TenSV": "Hoang Van E",
+    "Gioitinh": "Nam",
+    "Ngaysinh": "05/05/2004",
+    "Lop": "K64",
+    "Khoa": "2024"
+  },
+  {
+    "MSSV": "2024006",
+    "TenSV": "Tran Van F",
+    "Gioitinh": "Nam",
+    "Ngaysinh": "06/06/2005",
+    "Lop": "K65",
+    "Khoa": "2025"
+  },
+  {
+    "MSSV": "2024007",
+    "TenSV": "Nguyen Thi G",
+    "Gioitinh": "Nữ",
+    "Ngaysinh": "07/07/2006",
+    "Lop": "K66",
+    "Khoa": "2026"
+  },
+  {
+    "MSSV": "2024008",
+    "TenSV": "Pham Van H",
+    "Gioitinh": "Nam",
+    "Ngaysinh": "08/08/2007",
+    "Lop": "K67",
+    "Khoa": "2027"
+  },
+  {
+    "MSSV": "2024009",
+    "TenSV": "Le Thi I",
+    "Gioitinh": "Nữ",
+    "Ngaysinh": "09/09/2008",
+    "Lop": "K68",
+    "Khoa": "2028"
+  },
+  {
+    "MSSV": "2024010",
+    "TenSV": "Hoang Van J",
+    "Gioitinh": "Nam",
+    "Ngaysinh": "10/10/2009",
+    "Lop": "K69",
+    "Khoa": "2029"
+  },
+  {
+    "MSSV": "2024011",
+    "TenSV": "Tran Van K",
+    "Gioitinh": "Nam",
+    "Ngaysinh": "11/11/2010",
+    "Lop": "K70",
+    "Khoa": "2030"
+  },
+  {
+    "MSSV": "2024012",
+    "TenSV": "Nguyen Thi L",
+    "Gioitinh": "Nữ",
+    "Ngaysinh": "12/12/2011",
+    "Lop": "K71",
+    "Khoa": "2031"
+  },
+  {
+    "MSSV": "2024013",
+    "TenSV": "Pham Van M",
+    "Gioitinh": "Nam",
+    "Ngaysinh": "13/01/2000",
+    "Lop": "K72",
+    "Khoa": "2032"
+  },
+  {
+    "MSSV": "2024014",
+    "TenSV": "Le Thi N",
+    "Gioitinh": "Nữ",
+    "Ngaysinh": "14/02/2001",
+    "Lop": "K73",
+    "Khoa": "2033"
+  },
+  {
+    "MSSV": "2024015",
+    "TenSV": "Hoang Van O",
+    "Gioitinh": "Nam",
+    "Ngaysinh": "15/03/2002",
+    "Lop": "K74",
+    "Khoa": "2034"
+  },
+  {
+    "MSSV": "2024016",
+    "TenSV": "Tran Van P",
+    "Gioitinh": "Nam",
+    "Ngaysinh": "16/04/2003",
+    "Lop": "K75",
+    "Khoa": "2035"
+  },
+  {
+    "MSSV": "2024017",
+    "TenSV": "Nguyen Thi Q",
+    "Gioitinh": "Nữ",
+    "Ngaysinh": "17/05/2004",
+    "Lop": "K76",
+    "Khoa": "2036"
+  },
+  {
+    "MSSV": "2024018",
+    "TenSV": "Pham Van R",
+    "Gioitinh": "Nam",
+    "Ngaysinh": "18/06/2005",
+    "Lop": "K77",
+    "Khoa": "2037"
+  },
+  {
+    "MSSV": "2024019",
+    "TenSV": "Le Thi S",
+    "Gioitinh": "Nữ",
+    "Ngaysinh": "19/07/2006",
+    "Lop": "K78",
+    "Khoa": "2038"
+  },
+  {
+    "MSSV": "2024020",
+    "TenSV": "Hoang Van T",
+    "Gioitinh": "Nam",
+    "Ngaysinh": "20/08/2007",
+    "Lop": "K79",
+    "Khoa": "2039"
+  }
+]
