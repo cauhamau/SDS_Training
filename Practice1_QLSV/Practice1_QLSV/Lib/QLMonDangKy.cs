@@ -1,20 +1,28 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Syntax.Lib
+namespace Practice1_QLSV.Lib
 {
-    class DanhSachMonDangKy
+    class QLMonDangKy
     {
         List<MonDangKy> _monDangKy = new List<MonDangKy>();
         public List<MonDangKy> ListMonDangKy { get => _monDangKy; set => _monDangKy = value; }
+
+        public void GetJSON(string link)
+        {
+            string json_MonDangKy = File.ReadAllText(link);
+            ListMonDangKy = JsonConvert.DeserializeObject<List<MonDangKy>>(json_MonDangKy);
+        }
         public void SoMonHocSinhVienDangKy(int MSSV)
         {
-            List<MonDangKy> monDK = ListMonDangKy.Where(x=>x.MSSV==MSSV).ToList();
-            if (monDK.Count==0)
+            List<MonDangKy> listmonDK = ListMonDangKy.Where(x=>x.MSSV==MSSV).ToList();
+            if (listmonDK.Count==0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Không tìm thấy thông tin.");
@@ -23,9 +31,9 @@ namespace Syntax.Lib
             else
             {
                 Console.ForegroundColor= ConsoleColor.Green;
-                Console.Write("Sinh viên đã đăng ký {0} môn: ", monDK.Count);
+                Console.Write("Sinh viên đã đăng ký {0} môn: ", listmonDK.Count);
                 Console.ResetColor();
-                foreach (MonDangKy monDangKy in monDK)
+                foreach (MonDangKy monDangKy in listmonDK)
                 {
                     Console.Write(" {0}", monDangKy.MaMH);
                 }
@@ -35,17 +43,17 @@ namespace Syntax.Lib
         }
         public void NhapDiemSinhVien(int MSSV,string MaMH)
         {
-            MonDangKy monDK = new MonDangKy();
-            monDK.MSSV = MSSV;
-            monDK.MaMH = MaMH;
+            MonDangKy listmonDK = new MonDangKy();
+            listmonDK.MSSV = MSSV;
+            listmonDK.MaMH = MaMH;
             
             while (true)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write("Nhập điểm quá trình: ");
                 Console.ResetColor();
-                monDK.DQT = int.Parse(Console.ReadLine());
-                if (monDK.DQT > 10 || monDK.DQT < 0)
+                listmonDK.DQT = int.Parse(Console.ReadLine());
+                if (listmonDK.DQT > 10 || listmonDK.DQT < 0)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Nhập sai, vui lòng nhập lại.");
@@ -59,8 +67,8 @@ namespace Syntax.Lib
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write("Nhập điểm quá trình: ");
                 Console.ResetColor();
-                monDK.DTP = int.Parse(Console.ReadLine());
-                if (monDK.DTP > 10 || monDK.DTP < 0)
+                listmonDK.DTP = int.Parse(Console.ReadLine());
+                if (listmonDK.DTP > 10 || listmonDK.DTP < 0)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Nhập sai, vui lòng nhập lại.");
@@ -68,7 +76,7 @@ namespace Syntax.Lib
                 }
                 else break;
             }
-            ListMonDangKy.Add(monDK);
+            ListMonDangKy.Add(listmonDK);
 
         }
         

@@ -1,16 +1,25 @@
-﻿using System;
+﻿using Newtonsoft.Json.Converters;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Practice1_QLSV.Lib
 {
-    class DanhSachSV
+    class QLSV
     {
         List<Sinhvien> _ListSV = new List<Sinhvien>();
 
         public List<Sinhvien> ListSV { get => _ListSV; set => _ListSV = value; }
+
+        public void GetJSON(string link)
+        {
+            string json_SinhVien = File.ReadAllText(link);
+            ListSV = JsonConvert.DeserializeObject<List<Sinhvien>>(json_SinhVien, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+        }
         public void XuatDanhSachSV()
         {
             Console.WriteLine("{0,60}","Danh sách sinh viên");

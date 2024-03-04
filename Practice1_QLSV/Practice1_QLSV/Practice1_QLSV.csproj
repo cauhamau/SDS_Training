@@ -46,9 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Lib\DanhSachMH.cs" />
-    <Compile Include="Lib\DanhSachMonDangKy.cs" />
-    <Compile Include="Lib\DanhSachSV.cs" />
+    <Compile Include="Lib\QLMH.cs" />
+    <Compile Include="Lib\QLMonDangKy.cs" />
+    <Compile Include="Lib\QLSV.cs" />
     <Compile Include="Lib\MonDangKy.cs" />
     <Compile Include="Lib\Monhoc.cs" />
     <Compile Include="Lib\Sinhvien.cs" />

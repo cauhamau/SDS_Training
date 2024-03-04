@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Syntax.Lib
+namespace Practice1_QLSV.Lib
 {
     class MonDangKy
     {

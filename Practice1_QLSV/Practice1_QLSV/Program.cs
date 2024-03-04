@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Practice1_QLSV.Lib;
-using Syntax.Lib;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections;
@@ -21,18 +20,15 @@ namespace Practice1_QLSV
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
-            string json_SinhVien = File.ReadAllText("../../Data/Sinhvien.json");
-            DanhSachSV danhSachSV = new DanhSachSV();
-            danhSachSV.ListSV = JsonConvert.DeserializeObject<List<Sinhvien>>(json_SinhVien, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
 
-            string json_MonHoc = File.ReadAllText("../../Data/Monhoc.json");
-            DanhSachMH danhSachMH = new DanhSachMH();
-            danhSachMH.ListMH = JsonConvert.DeserializeObject<List<Monhoc>>(json_MonHoc);
+            QLSV danhSachSV = new QLSV();
+            danhSachSV.GetJSON("../../Data/Sinhvien.json");
 
-            string json_MonDangKy = File.ReadAllText("../../Data/Mondanky.json");
-            DanhSachMonDangKy danhSachMonDangKy = new DanhSachMonDangKy();
-            danhSachMonDangKy.ListMonDangKy = JsonConvert.DeserializeObject<List<MonDangKy>>(json_MonDangKy);
+            QLMH danhSachMH = new QLMH();
+            danhSachMH.GetJSON("../../Data/Monhoc.json");
 
+            QLMonDangKy danhSachMonDangKy = new QLMonDangKy();
+            danhSachMonDangKy.GetJSON("../../Data/Mondangky.json");
 
 
             int choice = 1;
@@ -190,7 +186,6 @@ namespace Practice1_QLSV
                 }
             }
         }
-
     }
 
 }
