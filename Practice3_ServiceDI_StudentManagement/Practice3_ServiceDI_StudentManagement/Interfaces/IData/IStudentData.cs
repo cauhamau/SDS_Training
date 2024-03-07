@@ -16,6 +16,8 @@ namespace Practice3_ServiceDI_StudentManagement.Interfaces.IData
         DataTable GetEnrolledCourseInfoForStudent(int MSSV);
 
         DataTable GetResultStudent(int MSSV);
+
+        void InputDataScore(int MSSV, string MAMH, float DQT, float DTP);
     }
 }
 

@@ -74,8 +74,8 @@ namespace Practice3_ServiceDI_StudentManagement.Data.Files
         public DataTable GetResultStudent(int MSSV)
         {
             _cnn.Open();
-            string sql = "Select DANGKYMH.MAMH,TENMH, DTP, DQT, ROUND((DTP*RATEDTP+DQT*RATEDQT)/2,2) AS DTK,"+
-                          " CASE WHEN ROUND((DTP*RATEDTP+DQT*RATEDQT)/2,2) > 4.0 THEN 'Pass' ELSE 'Fail' END AS KETQUA"+
+            string sql = "Select DANGKYMH.MAMH,TENMH, DTP, DQT, ROUND((DTP*RATEDTP+DQT*RATEDQT),2) AS DTK,"+
+                          " CASE WHEN ROUND((DTP*RATEDTP+DQT*RATEDQT),2) > 4.0 THEN 'Pass' ELSE 'Fail' END AS KETQUA"+
                           " FROM DANGKYMH INNER JOIN MONHOC ON MONHOC.MAMH=DANGKYMH.MAMH"+
                           $" WHERE MSSV={MSSV}";
             SqlCommand cmd = new SqlCommand(sql, _cnn);
@@ -86,6 +86,25 @@ namespace Practice3_ServiceDI_StudentManagement.Data.Files
 
             if (result is null) return null;
             return result;
+        }
+
+
+        public void InputDataScore(int  MSSV, string MAMH,float DQT, float DTP)
+        {
+            _cnn.Open();
+            string sql = $"INSERT INTO DANGKYMH(MAMH, MSSV, DQT, DTP) VALUES ('{MAMH}',{MSSV},{DQT},{DTP})";
+            Console.WriteLine(sql);
+            try
+            {
+                SqlCommand cmd = new SqlCommand(sql, _cnn);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            _cnn.Close();
         }
     }
 }

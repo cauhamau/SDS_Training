@@ -13,7 +13,7 @@ namespace Practice3_ServiceDI_StudentManagement.Model
         int _SoTiet;
         float _RateDQT, _RateDTP;
 
-        public MonHoc(string maMH, string tenMH, int soTiet, float rateDQT, float rateDTP)
+        public MonHoc(string maMH, string tenMH,  float rateDQT, float rateDTP, int soTiet)
         {
             _MaMH = maMH;
             _TenMH = tenMH;

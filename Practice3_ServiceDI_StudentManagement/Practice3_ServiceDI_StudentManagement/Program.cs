@@ -53,6 +53,9 @@ namespace Practice3_ServiceDI_StudentManagement
                     case 4:
                         studentService.ShowEnrolledCourseInfoForStudent(students);
                         break;
+                    case 5:
+                        studentService.InputScore(students);
+                        break;
                     case 6:
                         studentService.ShowResultStudent(students);
                         break;
@@ -61,7 +64,6 @@ namespace Practice3_ServiceDI_StudentManagement
                         break;
                 }
             }
-            //studentService.ShowList(students);
 
         }
 

@@ -21,5 +21,6 @@ namespace Practice3_ServiceDI_StudentManagement.Interfaces.IServices
 
         void ShowResultStudent(List<Student> students);
 
+        void InputScore(List<Student> students);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Practice3_ServiceDI_StudentManagement.Interfaces.IData;
+﻿using Practice3_ServiceDI_StudentManagement.Data.Files;
+using Practice3_ServiceDI_StudentManagement.Interfaces.IData;
 using Practice3_ServiceDI_StudentManagement.Interfaces.IServices;
 using Practice3_ServiceDI_StudentManagement.Model;
 using Practice3_ServiceDI_StudentManagement.Utilities;
@@ -153,7 +154,7 @@ namespace Practice3_ServiceDI_StudentManagement.Services
                 {
                     foreach (DataRow row in result.Rows)
                     {
-                        t.AddRow(row["MAMH"], row["TENMH"], row["DTP"], row["DQT"], float.Parse(row["DTK"].ToString()), row["KETQUA"]);
+                        t.AddRow(row["MAMH"], row["TENMH"], row["DTP"], row["DQT"], float.Parse(row["DTK"].ToString().Replace(" ","")), row["KETQUA"]);
                     }
                     t.Print();
                 }
@@ -165,6 +166,49 @@ namespace Practice3_ServiceDI_StudentManagement.Services
                     Console.ResetColor();
                 }
 
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("=> Không tìm thấy sinh viên.");
+                Console.ResetColor();
+            }
+        }
+
+        public void InputScore(List<Student> students)
+        {
+            SubjectService subjects = new SubjectService(new SubjectFileData("data source=.;initial catalog=QLSV;integrated security=true;"));
+            List<MonHoc> ListMonHoc = subjects.GetAll();
+
+            subjects.ShowList(ListMonHoc);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("Nhập mã sinh viên để nhập điểm: ");
+            
+            int MSSV = int.Parse(Console.ReadLine());
+            Student s = students.SingleOrDefault(x => x.MSSV == MSSV);
+            if (s != null)
+            {
+                Console.Write("Nhập mã môn học để nhập điểm: ");
+                string MAMH = Console.ReadLine();
+                //Console.WriteLine(ListMonHoc[0].MaMH.ToString()+MAMH);
+                MonHoc monhoc = ListMonHoc.SingleOrDefault(x => x.MaMH.ToString().Replace(" ","") == MAMH);
+                if  (monhoc != null)
+                {
+                    Console.Write("Nhập điểm quá trình: ");
+                    float DQT = float.Parse(Console.ReadLine());
+                    Console.Write("Nhập điểm thành phần: ");
+                    float DTP = float.Parse(Console.ReadLine());
+                    _studentData.InputDataScore(MSSV, MAMH, DQT, DTP);
+                    Console.ResetColor();
+                }
+                else
+                {
+                    
+                    Console.ForegroundColor= ConsoleColor.Red;
+                    Console.WriteLine("=> Không tìm thấy môn học");
+                    Console.ResetColor();
+                }
+                
             }
             else
             {
