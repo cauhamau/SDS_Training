@@ -10,8 +10,16 @@ namespace Practice3_ServiceDI_StudentManagement.Interfaces.IServices
     internal interface IStudentService
     {
         List<Student> GetAll();
-        //Student Create();
+
         void ShowList(List<Student> student);
-        void ShowStudent(Student student);
+
+        void ShowStudent(List<Student> student);
+
+        void CountSubjects(List<Student> students);
+
+        void ShowEnrolledCourseInfoForStudent(List<Student> students);
+
+        void ShowResultStudent(List<Student> students);
+
     }
 }

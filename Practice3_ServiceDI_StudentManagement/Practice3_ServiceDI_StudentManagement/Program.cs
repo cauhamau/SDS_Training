@@ -26,28 +26,42 @@ namespace Practice3_ServiceDI_StudentManagement
             int choice;
             while (true)
             {
-                Console.WriteLine("1. Thêm sinh viên");
-                Console.WriteLine("2. Danh sách sinh viên");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("0. Thoát chương trình.");
+                Console.WriteLine("1. Xem danh sách sinh viên.");
+                Console.WriteLine("2. Xem chi tiết sinh viên.");
+                Console.WriteLine("3. Xem số môn học sinh viên đăng ký.");
+                Console.WriteLine("4. Xem điểm môn học của sinh viên.");
+                Console.WriteLine("5. Nhập điểm sinh viên.");
+                Console.WriteLine("6. Xem kết quả trượt đỗ của sinh viên.");
                 Console.Write("Chọn chức năng: ");
+                Console.ResetColor();
                 choice = int.Parse(Console.ReadLine());
                 switch (choice)
                 {
+                    case 0:
+                        break;
                     case 1:
-                        //try
-                        //{
-                        //    students.Add(studentService.Create());
-                        //}    
-                        //catch(Exception ex)
-                        //{ Console.WriteLine("Lỗi:",ex.Message); }
-
+                        studentService.ShowList(students);
                         break;
                     case 2:
-                        studentService.ShowList(students);
+                        studentService.ShowStudent(students);
+                        break;
+                    case 3:
+                        studentService.CountSubjects(students);
+                        break;
+                    case 4:
+                        studentService.ShowEnrolledCourseInfoForStudent(students);
+                        break;
+                    case 6:
+                        studentService.ShowResultStudent(students);
+                        break;
+                    default:
+                        Console.WriteLine("Nhập sai vui lòng nhập lại.");
                         break;
                 }
             }
-            //
-            studentService.ShowList(students);
+            //studentService.ShowList(students);
 
         }
 
