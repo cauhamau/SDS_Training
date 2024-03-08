@@ -1,0 +1,12 @@
+H:\InternS\Training\Practice4_CastleWindsor\Practice4_CastleWindsor\obj\Debug\Practice4_CastleWindsor.csproj.AssemblyReference.cache
+H:\InternS\Training\Practice4_CastleWindsor\Practice4_CastleWindsor\obj\Debug\Practice4_CastleWindsor.csproj.CoreCompileInputs.cache
+H:\InternS\Training\Practice4_CastleWindsor\Practice4_CastleWindsor\bin\Debug\Practice4_CastleWindsor.exe.config
+H:\InternS\Training\Practice4_CastleWindsor\Practice4_CastleWindsor\bin\Debug\Practice4_CastleWindsor.exe
+H:\InternS\Training\Practice4_CastleWindsor\Practice4_CastleWindsor\bin\Debug\Practice4_CastleWindsor.pdb
+H:\InternS\Training\Practice4_CastleWindsor\Practice4_CastleWindsor\obj\Debug\Practice4_CastleWindsor.exe
+H:\InternS\Training\Practice4_CastleWindsor\Practice4_CastleWindsor\obj\Debug\Practice4_CastleWindsor.pdb
+H:\InternS\Training\Practice4_CastleWindsor\Practice4_CastleWindsor\bin\Debug\Castle.Core.dll
+H:\InternS\Training\Practice4_CastleWindsor\Practice4_CastleWindsor\bin\Debug\Castle.Windsor.dll
+H:\InternS\Training\Practice4_CastleWindsor\Practice4_CastleWindsor\bin\Debug\Castle.Core.xml
+H:\InternS\Training\Practice4_CastleWindsor\Practice4_CastleWindsor\bin\Debug\Castle.Windsor.xml
+H:\InternS\Training\Practice4_CastleWindsor\Practice4_CastleWindsor\obj\Debug\Practice.73DE1BFD.Up2Date
