@@ -54,7 +54,7 @@ namespace Practice5a_Nhibernate.Utilities
                 line = "";
                 for (int i = 0; i < row.Length; i++)
                 {
-                    if (int.TryParse(row[i], out int n))
+                    if (float.TryParse(row[i], out float n))
                     {
                         line += "| " + row[i].PadLeft(_lengths[i]) + ' ';  // numbers are padded to the left
                     }

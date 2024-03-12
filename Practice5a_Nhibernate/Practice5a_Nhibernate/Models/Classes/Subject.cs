@@ -13,14 +13,15 @@ namespace Practice5a_Nhibernate.Models.Classes
         int _SoTiet;
         float _RateDQT, _RateDTP;
 
-        //public Subject(string maMH, string tenMH,  float rateDQT, float rateDTP, int soTiet)
-        //{
-        //    _MaMH = maMH;
-        //    _TenMH = tenMH;
-        //    _SoTiet = soTiet;
-        //    _RateDQT = rateDQT;
-        //    _RateDTP = rateDTP;
-        //}
+        public Subject() { }
+        public Subject(string maMH, string tenMH, float rateDQT, float rateDTP, int soTiet)
+        {
+            _MaMH = maMH;
+            _TenMH = tenMH;
+            _SoTiet = soTiet;
+            _RateDQT = rateDQT;
+            _RateDTP = rateDTP;
+        }
 
         public virtual string TENMH { get => _TenMH; set => _TenMH = value; }
         public virtual int SOTIET { get => _SoTiet; set => _SoTiet = value; }

@@ -22,6 +22,6 @@ namespace Practice5a_Nhibernate.Interfaces.IServices
 
         void ShowResultStudent(IList<Student> students);
 
-        void InputScore(IList<Student> students);
+        void InputScore(IList<Student> students, IList<Subject> subjects);
     }
 }

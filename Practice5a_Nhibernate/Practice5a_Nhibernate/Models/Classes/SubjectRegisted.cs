@@ -13,14 +13,14 @@ namespace Practice5a_Nhibernate.Models.Classes
         float _DQT;
         float _DTP;
 
-        //public SubjectRegisted() { }
-        //public SubjectRegisted(string maMH, int mSSV, float dQT, float dTP)
-        //{
-        //    _MaMH = maMH;
-        //    _MSSV = mSSV;
-        //    _DQT = dQT;
-        //    _DTP = dTP;
-        //}
+        public SubjectRegisted() { }
+        public SubjectRegisted(string maMH, int mSSV, float dQT, float dTP)
+        {
+            _MaMH = maMH;
+            _MSSV = mSSV;
+            _DQT = dQT;
+            _DTP = dTP;
+        }
 
         public virtual string MAMH { get => _MaMH; set => _MaMH = value; }
         public virtual int MSSV { get => _MSSV; set => _MSSV = value; }

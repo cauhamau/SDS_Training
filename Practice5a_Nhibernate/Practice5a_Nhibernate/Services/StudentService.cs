@@ -32,7 +32,7 @@ namespace Practice5a_Nhibernate.Services
             var t = new TablePrinter("MSSV", "Họ tên", "Giới tính", "Ngày sinh", "Lớp", "Khoá");
             foreach (var s in students)
             {
-                t.AddRow(s.MSSV, s.HOTENSV, s.GIOITINH, s.NGAYSINH, s.LOP, s.KHOA);
+                t.AddRow(s.MSSV, s.HOTENSV, s.GIOITINH, s.NGAYSINH.ToString("dd/MM/yyyy"), s.LOP, s.KHOA);
             }
             t.Print();
 
@@ -179,12 +179,11 @@ namespace Practice5a_Nhibernate.Services
             }
         }
 
-        public void InputScore(IList<Student> students)
+        public void InputScore(IList<Student> students, IList<Subject> subjects)
         {
-            SubjectService subjects = new SubjectService(new SubjectFileData("data source=.;initial catalog=QLSV;integrated security=true;"));
-            IList<Subject> ListMonHoc = subjects.GetAll();
-
-            subjects.ShowList(ListMonHoc);
+            ISubjectService subjectService = new SubjectService();
+            
+            subjectService.ShowList(subjects);
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("Nhập mã sinh viên để nhập điểm: ");
 
@@ -195,7 +194,8 @@ namespace Practice5a_Nhibernate.Services
                 Console.Write("Nhập mã môn học để nhập điểm: ");
                 string MAMH = Console.ReadLine();
                 //Console.WriteLine(ListMonHoc[0].MaMH.ToString()+MAMH);
-                Subject monhoc = ListMonHoc.SingleOrDefault(x => x.MAMH.ToString().Replace(" ", "") == MAMH);
+                Subject monhoc = subjects.SingleOrDefault(x => x.MAMH.ToString().Replace(" ", "") == MAMH);
+
                 if (monhoc != null)
                 {
                     Console.Write("Nhập điểm quá trình: ");

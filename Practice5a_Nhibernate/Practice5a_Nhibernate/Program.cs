@@ -99,12 +99,12 @@ namespace Practice5a_Nhibernate
                     case 4:
                         studentService.ShowEnrolledCourseInfoForStudent(students);
                         break;
-                    //case 5:
-                    //    studentService.InputScore(students);
-                    //    break;
-                    //case 6:
-                    //    studentService.ShowResultStudent(students);
-                    //    break;
+                    case 5:
+                        studentService.InputScore(students, subjects);
+                        break;
+                    case 6:
+                        studentService.ShowResultStudent(students);
+                        break;
                     default:
                         Console.WriteLine("Nhập sai vui lòng nhập lại.");
                         break;

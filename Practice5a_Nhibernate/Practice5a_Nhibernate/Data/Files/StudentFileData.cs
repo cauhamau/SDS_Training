@@ -2,9 +2,11 @@
 using NHibernate;
 using NHibernate.Dialect;
 using NHibernate.Driver;
+using NHibernate.Hql.Ast;
 using Practice5a_Nhibernate.Interfaces.IData;
 using Practice5a_Nhibernate.Models.Classes;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -71,39 +73,56 @@ namespace Practice5a_Nhibernate.Data.Files
 
         public DataTable GetResultStudent(int MSSV)
         {
-            //_cnn.Open();
-            //string sql = "Select DANGKYMH.MAMH,TENMH, DTP, DQT, ROUND((DTP*RATEDTP+DQT*RATEDQT),2) AS DTK,"+
-            //              " CASE WHEN ROUND((DTP*RATEDTP+DQT*RATEDQT),2) > 4.0 THEN 'Pass' ELSE 'Fail' END AS KETQUA"+
-            //              " FROM DANGKYMH INNER JOIN MONHOC ON MONHOC.MAMH=DANGKYMH.MAMH"+
-            //              $" WHERE MSSV={MSSV}";
-            //SqlCommand cmd = new SqlCommand(sql, _cnn);
-            //DataTable result = new DataTable();
-            //SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            //adapter.Fill(result);
-            //_cnn.Close();
-
-            //if (result is null) return null;
-            //return result;
-            return null;
+            var _session = _sefact.OpenSession();
+            string sqlQuery = "Select DANGKYMH.MAMH,TENMH, DTP, DQT, ROUND((DTP*RATEDTP+DQT*RATEDQT),2) AS DTK," +
+                          " CASE WHEN ROUND((DTP*RATEDTP+DQT*RATEDQT),2) > 4.0 THEN 'Pass' ELSE 'Fail' END AS KETQUA" +
+                          " FROM DANGKYMH INNER JOIN MONHOC ON MONHOC.MAMH=DANGKYMH.MAMH" +
+                          $" WHERE MSSV={MSSV}";
+            IQuery query = _session.CreateSQLQuery(sqlQuery);
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add("MAMH", typeof(string));
+            dataTable.Columns.Add("TENMH", typeof(string));
+            dataTable.Columns.Add("DTP", typeof(decimal));
+            dataTable.Columns.Add("DQT", typeof(decimal));
+            dataTable.Columns.Add("DTK", typeof(decimal));
+            dataTable.Columns.Add("KETQUA", typeof(string));
+            var results = query.List<object[]>();
+            foreach (var row in results)
+            {
+                dataTable.Rows.Add(row);
+            }
+            _session.Close();
+                
+            if (results is null) return null;
+            return dataTable;
         }
 
 
         public void InputDataScore(int  MSSV, string MAMH,float DQT, float DTP)
         {
-            //_cnn.Open();
-            //string sql = $"INSERT INTO DANGKYMH(MAMH, MSSV, DQT, DTP) VALUES ('{MAMH}',{MSSV},{DQT},{DTP})";
-            //Console.WriteLine(sql);
-            //try
-            //{
-            //    SqlCommand cmd = new SqlCommand(sql, _cnn);
-            //    cmd.ExecuteNonQuery();
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //}
+            var _session = _sefact.OpenSession();
+            var tx = _session.BeginTransaction();
+            
+            IQuery sqlQuery = _session.CreateSQLQuery($"SELECT * FROM DANGKYMH WHERE MSSV={MSSV}").AddEntity(typeof(SubjectRegisted));
+            IList<SubjectRegisted> result = sqlQuery.List<SubjectRegisted>();
+            SubjectRegisted registed = result.SingleOrDefault(x => (x.MSSV == MSSV && x.MAMH.ToString().Replace(" ","")==MAMH));
 
-            //_cnn.Close();
+            if (registed != null)
+            {
+                Console.WriteLine("Môn học đã có điểm");
+                return;
+            }
+            SubjectRegisted subjectRegisteds = new SubjectRegisted(MAMH, MSSV, DQT, DTP);
+            try
+            {
+                _session.Save(subjectRegisteds);
+                tx.Commit();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            _session.Close();
         }
     }
 }
