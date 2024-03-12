@@ -1,9 +1,12 @@
-﻿using Practice5a_Nhibernate.Interfaces.IData;
+﻿using NHibernate.Dialect;
+using NHibernate.Driver;
+using Practice5a_Nhibernate.Interfaces.IData;
 using Practice5a_Nhibernate.Models.Classes;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,32 +14,27 @@ namespace Practice5a_Nhibernate.Data.Files
 {
     internal class SubjectFileData : ISubjectData
     {
-        string _connectionString;
-        SqlConnection _cnn;
+        NHibernate.Cfg.Configuration _cfg;
+        NHibernate.ISessionFactory _sefact;
 
         public SubjectFileData(string connectionString)
         {
-            _connectionString = connectionString;
-            _cnn = new SqlConnection(_connectionString);
+            _cfg = new NHibernate.Cfg.Configuration();
+            _cfg.DataBaseIntegration(x => {
+                x.ConnectionString = "data source=.;initial catalog=QLSV;integrated security=true;";
+                x.Driver<SqlClientDriver>();
+                x.Dialect<MsSql2008Dialect>();
+            });
+            _cfg.AddAssembly(Assembly.GetExecutingAssembly());
+            _sefact = _cfg.BuildSessionFactory();
         }
 
-        public List<MonHoc> GetAll()
+        public IList<Subject> GetAll()
         {
-            List<MonHoc> result = new List<MonHoc>();
-            _cnn.Open();
-            if (_cnn != null)
-            {
-                string sql = "Select * from MONHOC";
-                SqlCommand cmd = new SqlCommand(sql, _cnn);
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    result.Add(new MonHoc(reader.GetString(1), reader.GetString(0), float.Parse(reader.GetDecimal(2).ToString()), float.Parse(reader.GetDecimal(3).ToString()), reader.GetInt32(4)));
-                }
-            }
-            _cnn.Close();
-            return result;
+            var _session = _sefact.OpenSession();
+            IList<Subject> subjects = _session.CreateCriteria<Subject>().List<Subject>();
+            _session.Close();
+            return subjects;
         }
 
     }

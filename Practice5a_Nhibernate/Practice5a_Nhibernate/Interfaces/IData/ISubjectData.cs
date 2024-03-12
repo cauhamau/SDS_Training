@@ -10,6 +10,6 @@ namespace Practice5a_Nhibernate.Interfaces.IData
 {
     internal interface ISubjectData
     {
-        List<MonHoc> GetAll();
+        IList<Subject> GetAll();
     }
 }

@@ -9,7 +9,7 @@ namespace Practice5a_Nhibernate.Interfaces.IServices
 {
     internal interface ISubjectService
     {
-        List<MonHoc> GetAll();
-        void ShowList(List<MonHoc> subjects);
+        IList<Subject> GetAll();
+        void ShowList(IList<Subject> subjects);
     }
 }

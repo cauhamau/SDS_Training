@@ -21,8 +21,9 @@ namespace Practice5a_Nhibernate
         {
             //var cfg = new NHibernate.Cfg.Configuration();
 
-            //cfg.DataBaseIntegration(x => {
-            //    x.ConnectionString = "data source=.;initial catalog=QLSV;integrated security=true;"; 
+            //cfg.DataBaseIntegration(x =>
+            //{
+            //    x.ConnectionString = "data source=.;initial catalog=QLSV;integrated security=true;";
             //    x.Driver<SqlClientDriver>();
             //    x.Dialect<MsSql2008Dialect>();
             //});
@@ -39,9 +40,9 @@ namespace Practice5a_Nhibernate
 
             //    using (var tx = session.BeginTransaction())
             //    {
-            //        IList<Student> students = session.CreateCriteria<Student>().List<Student>();
+            //        IList<Student> _students = session.CreateCriteria<Student>().List<Student>();
 
-            //        foreach (var student in students)
+            //        foreach (var student in _students)
             //        {
             //            Console.WriteLine("{0} \t{1} \t{2}",
             //               student.MSSV, student.HOTENSV, student.GIOITINH);
@@ -59,11 +60,14 @@ namespace Practice5a_Nhibernate
 
             var container = new WindsorContainer();
             container.Register(Component.For<IStudentService>().ImplementedBy<StudentService>(),
-                   Component.For<IStudentData>().ImplementedBy<StudentFileData>().DependsOn(Dependency.OnValue("connectionString", "data source=.;initial catalog=QLSV;integrated security=true;"))
+                   Component.For<ISubjectService>().ImplementedBy<SubjectService>(),
+                   Component.For<IStudentData>().ImplementedBy<StudentFileData>().DependsOn(Dependency.OnValue("connectionString", "data source=.;initial catalog=QLSV;integrated security=true;")),
+                   Component.For<ISubjectData>().ImplementedBy<SubjectFileData>().DependsOn(Dependency.OnValue("connectionString", "data source=.;initial catalog=QLSV;integrated security=true;"))
                    );
             var studentService = container.Resolve<IStudentService>();
+            var subjectService = container.Resolve<ISubjectService>();
             IList<Student> students = studentService.GetAll();
-
+            IList<Subject> subjects = subjectService.GetAll();
             int choice;
             while (true)
             {
@@ -85,15 +89,16 @@ namespace Practice5a_Nhibernate
                     case 1:
                         studentService.ShowList(students);
                         break;
-                    //case 2:
-                    //    studentService.ShowStudent(students);
-                    //    break;
-                    //case 3:
-                    //    studentService.CountSubjects(students);
-                    //    break;
-                    //case 4:
-                    //    studentService.ShowEnrolledCourseInfoForStudent(students);
-                    //    break;
+                    case 2:
+                        studentService.ShowStudent(students);
+                        break;
+                    case 3:
+                        subjectService.ShowList(subjects);
+                        studentService.CountSubjects(students);
+                        break;
+                    case 4:
+                        studentService.ShowEnrolledCourseInfoForStudent(students);
+                        break;
                     //case 5:
                     //    studentService.InputScore(students);
                     //    break;

@@ -37,7 +37,7 @@ namespace Practice5a_Nhibernate.Services
             t.Print();
 
         }
-        public void ShowStudent(List<Student> students)
+        public void ShowStudent(IList<Student> students)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("Nhập mã sinh viên để xem thông tin: ");
@@ -59,7 +59,7 @@ namespace Practice5a_Nhibernate.Services
             }
         }
 
-        public void CountSubjects(List<Student> students)
+        public void CountSubjects(IList<Student> students)
         {
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.Write("Nhập mã sinh viên để xem thông tin: ");
@@ -69,17 +69,20 @@ namespace Practice5a_Nhibernate.Services
             if (s != null)
             {
 
-                List<string> result = _studentData.GetNumberSubjectRegisted(MSSV);
+                IList<SubjectRegisted> result = _studentData.GetNumberSubjectRegisted(MSSV);
 
 
                 if (result != null)
                 {
+                    //ISubjectService subjectService = new SubjectService();
+                    
+                    //subjectService.ShowList(subjectService.GetAll());
                     Console.ForegroundColor = ConsoleColor.Green;
 
                     Console.Write($"Sinh viên đã đăng ký {result.Count} môn: ");
-                    foreach (string i in result)
+                    foreach (SubjectRegisted i in result)
                     {
-                        Console.Write("  " + i);
+                        Console.Write("  " + i.MAMH);
                     }
                     Console.WriteLine();
                     Console.ResetColor();
@@ -101,7 +104,7 @@ namespace Practice5a_Nhibernate.Services
             }
         }
 
-        public void ShowEnrolledCourseInfoForStudent(List<Student> students)
+        public void ShowEnrolledCourseInfoForStudent(IList<Student> students)
         {
             var t = new TablePrinter("Mã môn học", "Tên môn học", "Điểm thành phần", "Điểm quá trình");
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -139,7 +142,7 @@ namespace Practice5a_Nhibernate.Services
                 Console.ResetColor();
             }
         }
-        public void ShowResultStudent(List<Student> students)
+        public void ShowResultStudent(IList<Student> students)
         {
             var t = new TablePrinter("Mã môn học", "Tên môn học", "Điểm thành phần", "Điểm quá trình", "Điểm tổng kết", "Kết quả");
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -176,10 +179,10 @@ namespace Practice5a_Nhibernate.Services
             }
         }
 
-        public void InputScore(List<Student> students)
+        public void InputScore(IList<Student> students)
         {
             SubjectService subjects = new SubjectService(new SubjectFileData("data source=.;initial catalog=QLSV;integrated security=true;"));
-            List<MonHoc> ListMonHoc = subjects.GetAll();
+            IList<Subject> ListMonHoc = subjects.GetAll();
 
             subjects.ShowList(ListMonHoc);
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -192,7 +195,7 @@ namespace Practice5a_Nhibernate.Services
                 Console.Write("Nhập mã môn học để nhập điểm: ");
                 string MAMH = Console.ReadLine();
                 //Console.WriteLine(ListMonHoc[0].MaMH.ToString()+MAMH);
-                MonHoc monhoc = ListMonHoc.SingleOrDefault(x => x.MaMH.ToString().Replace(" ", "") == MAMH);
+                Subject monhoc = ListMonHoc.SingleOrDefault(x => x.MAMH.ToString().Replace(" ", "") == MAMH);
                 if (monhoc != null)
                 {
                     Console.Write("Nhập điểm quá trình: ");

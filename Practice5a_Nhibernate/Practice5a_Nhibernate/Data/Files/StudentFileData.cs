@@ -1,4 +1,6 @@
-﻿using NHibernate.Dialect;
+﻿using Castle.Core.Resource;
+using NHibernate;
+using NHibernate.Dialect;
 using NHibernate.Driver;
 using Practice5a_Nhibernate.Interfaces.IData;
 using Practice5a_Nhibernate.Models.Classes;
@@ -35,35 +37,36 @@ namespace Practice5a_Nhibernate.Data.Files
         public IList<Student> GetAll()
         {
             var _session = _sefact.OpenSession();
-            return _session.CreateCriteria<Student>().List<Student>();
+            IList<Student> students = _session.CreateCriteria<Student>().List<Student>();
+            _session.Close();
+            return students;
         }
-        public List<string> GetNumberSubjectRegisted(int MSSV)
+        public IList<SubjectRegisted> GetNumberSubjectRegisted(int MSSV)
         {
-            //_cnn.Open();
-            //string sql = $"Select DANGKYMH.MAMH,TENMH from DANGKYMH INNER JOIN MONHOC ON MONHOC.MAMH=DANGKYMH.MAMH WHERE MSSV={MSSV}";
-            //SqlCommand cmd = new SqlCommand(sql, _cnn);
-            //SqlDataReader reader = cmd.ExecuteReader();
-            List<string> result = new List<string>();
-            //while (reader.Read())
-            //{
-            //    result.Add($"{reader.GetString(1).Replace(" ", "")}({reader.GetString(0).Replace(" ","")})");
-            //}
-            //_cnn.Close();
-            //if (result is null) return null;
+            var _session = _sefact.OpenSession();
+            IQuery sqlQuery = _session.CreateSQLQuery($"SELECT * FROM DANGKYMH WHERE MSSV={MSSV}").AddEntity(typeof(SubjectRegisted));
+            IList<SubjectRegisted> result = sqlQuery.List<SubjectRegisted>();
+            _session.Close();
             return result; 
-        }
+        }   
         public DataTable GetEnrolledCourseInfoForStudent(int MSSV)
         {
-            //_cnn.Open();
-            //string sql = $"Select DANGKYMH.MAMH,TENMH, DTP, DQT from DANGKYMH INNER JOIN MONHOC ON MONHOC.MAMH=DANGKYMH.MAMH WHERE MSSV={MSSV}";
-            //SqlCommand cmd = new SqlCommand(sql, _cnn);
-            DataTable result = new DataTable();
-            //SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            //adapter.Fill(result);
-            //_cnn.Close();
+            string sqlQuery = $"SELECT MONHOC.MAMH, MONHOC.TENMH, DANGKYMH.DTP, DANGKYMH.DQT FROM DANGKYMH INNER JOIN MONHOC ON MONHOC.MAMH = DANGKYMH.MAMH WHERE DANGKYMH.MSSV = '{MSSV}'";
+            var _session = _sefact.OpenSession();
+            // Tạo câu truy vấn SQL và chỉ định kiểu trả về cho các cột
+            IQuery query = _session.CreateSQLQuery(sqlQuery);
+            var results = query.List<object[]>();
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add("MAMH", typeof(string));
+            dataTable.Columns.Add("TENMH", typeof(string));
+            dataTable.Columns.Add("DTP", typeof(double));
+            dataTable.Columns.Add("DQT", typeof(double));
 
-            //if (result is null) return null;
-            return result;
+            foreach (var row in results)
+            {
+                dataTable.Rows.Add(row);
+            }
+            return dataTable;
         }
 
         public DataTable GetResultStudent(int MSSV)

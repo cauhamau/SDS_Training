@@ -14,14 +14,14 @@ namespace Practice5a_Nhibernate.Interfaces.IServices
 
         void ShowList(IList<Student> student);
 
-        void ShowStudent(List<Student> student);
+        void ShowStudent(IList<Student> student);
 
-        void CountSubjects(List<Student> students);
+        void CountSubjects(IList<Student> students);
 
-        void ShowEnrolledCourseInfoForStudent(List<Student> students);
+        void ShowEnrolledCourseInfoForStudent(IList<Student> students);
 
-        void ShowResultStudent(List<Student> students);
+        void ShowResultStudent(IList<Student> students);
 
-        void InputScore(List<Student> students);
+        void InputScore(IList<Student> students);
     }
 }

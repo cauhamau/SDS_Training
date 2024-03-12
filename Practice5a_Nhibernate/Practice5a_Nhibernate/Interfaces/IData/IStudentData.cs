@@ -12,7 +12,7 @@ namespace Practice5a_Nhibernate.Interfaces.IData
     internal interface IStudentData
     {
         IList<Student> GetAll();
-        List<string> GetNumberSubjectRegisted(int MSSV);
+        IList<SubjectRegisted> GetNumberSubjectRegisted(int MSSV);
         DataTable GetEnrolledCourseInfoForStudent(int MSSV);
 
         DataTable GetResultStudent(int MSSV);

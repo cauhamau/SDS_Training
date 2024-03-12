@@ -1,0 +1,16 @@
+﻿<?xml version = "1.0" encoding = "utf-8" ?>
+
+<hibernate-mapping xmlns = "urn:nhibernate-mapping-2.2" auto-import="true"
+   assembly = "Practice5a_Nhibernate" namespace = "Practice5a_Nhibernate.Models.Classes">
+
+    <class name = "SubjectRegisted" table="DANGKYMH" dynamic-update="true">
+        <cache usage="read-write"/>
+        <composite-id>
+            <key-property name="MAMH"/>
+            <key-property name="MSSV"/>
+        </composite-id>
+        <property name = "DTP"/>
+        <property name = "DQT"/>
+    </class>
+
+</hibernate-mapping>

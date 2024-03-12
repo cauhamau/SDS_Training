@@ -20,3 +20,5 @@ H:\InternS\Training\Practice5a_Nhibernate\Practice5a_Nhibernate\bin\Debug\Castle
 H:\InternS\Training\Practice5a_Nhibernate\Practice5a_Nhibernate\bin\Debug\Castle.Windsor.dll
 H:\InternS\Training\Practice5a_Nhibernate\Practice5a_Nhibernate\bin\Debug\Castle.Core.xml
 H:\InternS\Training\Practice5a_Nhibernate\Practice5a_Nhibernate\bin\Debug\Castle.Windsor.xml
+H:\InternS\Training\Practice5a_Nhibernate\Practice5a_Nhibernate\bin\Debug\Microsoft.Bcl.HashCode.dll
+H:\InternS\Training\Practice5a_Nhibernate\Practice5a_Nhibernate\bin\Debug\Microsoft.Bcl.HashCode.xml

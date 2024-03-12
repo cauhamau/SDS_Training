@@ -48,6 +48,9 @@
     <Reference Include="Iesi.Collections, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\Iesi.Collections.4.0.4\lib\net461\Iesi.Collections.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Bcl.HashCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.HashCode.1.1.1\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate, Version=5.5.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\NHibernate.5.5.0\lib\net461\NHibernate.dll</HintPath>
     </Reference>
@@ -78,9 +81,10 @@
     <Compile Include="Interfaces\IData\ISubjectData.cs" />
     <Compile Include="Interfaces\IServices\IStudentService.cs" />
     <Compile Include="Interfaces\IServices\ISubjectService.cs" />
-    <Compile Include="Models\Classes\DangKyMH.cs" />
-    <Compile Include="Models\Classes\MonHoc.cs" />
+    <Compile Include="Models\Classes\SubjectRegisted.cs" />
+    <Compile Include="Models\Classes\Subject.cs" />
     <Compile Include="Models\Classes\Student.cs" />
+    <EmbeddedResource Include="Models\Mappings\SubjectRegisted.hbm.xml" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\StudentService.cs" />
@@ -96,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\student.sql" />
+    <EmbeddedResource Include="Models\Mappings\Subject.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
