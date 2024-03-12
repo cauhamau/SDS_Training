@@ -31,7 +31,7 @@ namespace Practice4_CastleWindsor.Services
             var t = new TablePrinter("MSSV", "Họ tên", "Giới tính", "Ngày sinh", "Lớp", "Khoá");
             foreach (var s in students)
             {
-                t.AddRow(s.MSSV, s.HOTENSV,s.GIOITINH,s.NGAYSINH,s.LOP,s.KHOA);
+                t.AddRow(s.MSSV, s.HOTENSV,s.GIOITINH,s.NGAYSINH.ToString("dd/MM/yyyy"), s.LOP,s.KHOA);
             }
             t.Print();
 

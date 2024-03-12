@@ -89,7 +89,7 @@ namespace Practice4_CastleWindsor.Data.Files
         }
 
 
-        public void InputDataScore(int  MSSV, string MAMH,float DQT, float DTP)
+        public void InputDataScore(int  MSSV, string MAMH, float DQT, float DTP)
         {
             _cnn.Open();
             string sql = $"INSERT INTO DANGKYMH(MAMH, MSSV, DQT, DTP) VALUES ('{MAMH}',{MSSV},{DQT},{DTP})";
