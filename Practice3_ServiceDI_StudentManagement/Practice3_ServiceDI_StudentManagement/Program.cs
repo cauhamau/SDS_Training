@@ -23,8 +23,9 @@ namespace Practice3_ServiceDI_StudentManagement
             IStudentService studentService = new StudentService(new StudentFileData("data source=.;initial catalog=QLSV;integrated security=true;"));
             List<Student> students =  studentService.GetAll();
 
-            int choice;
-            while (true)
+            int choice=-1;
+            bool res;
+            while (choice!=0)
             {
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("0. Thoát chương trình.");
@@ -36,7 +37,17 @@ namespace Practice3_ServiceDI_StudentManagement
                 Console.WriteLine("6. Xem kết quả trượt đỗ của sinh viên.");
                 Console.Write("Chọn chức năng: ");
                 Console.ResetColor();
-                choice = int.Parse(Console.ReadLine());
+                #region choice is an integer
+                res = int.TryParse(Console.ReadLine(), out choice);
+                if (!res)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Nhập sai, vui lòng nhập lại.");
+                    Console.ResetColor();
+                    choice = -1;
+                    continue;
+                }
+                #endregion
                 switch (choice)
                 {
                     case 0:
@@ -60,7 +71,9 @@ namespace Practice3_ServiceDI_StudentManagement
                         studentService.ShowResultStudent(students);
                         break;
                     default:
-                        Console.WriteLine("Nhập sai vui lòng nhập lại.");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Nhập sai, vui lòng nhập lại.");
+                        Console.ResetColor();
                         break;
                 }
             }

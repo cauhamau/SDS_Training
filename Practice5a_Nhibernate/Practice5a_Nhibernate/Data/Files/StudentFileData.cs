@@ -109,7 +109,9 @@ namespace Practice5a_Nhibernate.Data.Files
 
             if (registed != null)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Môn học đã có điểm");
+                Console.ResetColor();
                 return;
             }
             SubjectRegisted subjectRegisteds = new SubjectRegisted(MAMH, MSSV, DQT, DTP);

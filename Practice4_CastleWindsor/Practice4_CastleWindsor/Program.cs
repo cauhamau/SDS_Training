@@ -29,7 +29,7 @@ namespace Practice4_CastleWindsor
             var studentService = container.Resolve<IStudentService>();
             
             List<Student> students = studentService.GetAll();
-
+            bool res;
             int choice;
             while (true)
             {
@@ -43,7 +43,18 @@ namespace Practice4_CastleWindsor
                 Console.WriteLine("6. Xem kết quả trượt đỗ của sinh viên.");
                 Console.Write("Chọn chức năng: ");
                 Console.ResetColor();
-                choice = int.Parse(Console.ReadLine());
+
+                #region choice is an integer
+                res = int.TryParse(Console.ReadLine(), out choice);
+                if (!res)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Nhập sai, vui lòng nhập lại");
+                    Console.ResetColor();
+                    continue;
+                }
+                #endregion
+
                 switch (choice)
                 {
                     case 0:

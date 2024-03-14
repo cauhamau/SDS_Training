@@ -93,7 +93,6 @@ namespace Practice4_CastleWindsor.Data.Files
         {
             _cnn.Open();
             string sql = $"INSERT INTO DANGKYMH(MAMH, MSSV, DQT, DTP) VALUES ('{MAMH}',{MSSV},{DQT},{DTP})";
-            Console.WriteLine(sql);
             try
             {
                 SqlCommand cmd = new SqlCommand(sql, _cnn);
@@ -101,7 +100,16 @@ namespace Practice4_CastleWindsor.Data.Files
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                if (ex.Message.Contains("Violation of PRIMARY KEY constraint"))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Nhập điểm không thành công, môn học đã có điểm.");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
 
             _cnn.Close();

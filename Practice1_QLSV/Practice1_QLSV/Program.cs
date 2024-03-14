@@ -31,7 +31,10 @@ namespace Practice1_QLSV
             danhSachMonDangKy.GetJSON("../../Data/Mondangky.json");
 
 
-            int choice = 1;
+            int choice = -1;
+            int MSSV;
+            bool res;
+            string MaMH;
             while (choice != 0)
             {
                 Console.WriteLine("----------Chức năng----------");
@@ -44,14 +47,26 @@ namespace Practice1_QLSV
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.Write("Nhập chức năng: ");
                 Console.ResetColor();
-                choice = int.Parse(Console.ReadLine());
-                Console.WriteLine(choice);
-                int MSSV;
-                string MaMH;
+                #region choice is an integer
+                res = int.TryParse(Console.ReadLine(), out choice);
+                if (!res)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Nhập sai, vui lòng nhập lại");
+                    Console.ResetColor();
+                    choice = -1;
+                    continue;
+                }
+                #endregion
+
+
+
                 switch (choice)
                 {
                     case 0:
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("Chương trình kết thúc.");
+                        Console.ResetColor();
                         break;
                     case 1:
                         danhSachSV.XuatDanhSachSV();
@@ -60,21 +75,52 @@ namespace Practice1_QLSV
                         Console.ForegroundColor = ConsoleColor.Blue;
                         Console.Write("Nhập mã sinh viên để xem thông tin: ");
                         Console.ResetColor();
-                        danhSachSV.ChiTietSV(int.Parse(Console.ReadLine()));
+                        #region MSSV is an integer
+                        
+                        res = int.TryParse(Console.ReadLine(), out MSSV);
+                        if (!res)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Mã sinh viên phải là số nguyên.");
+                            Console.ResetColor();
+                            break;
+                        }
+                        #endregion
+                        danhSachSV.ChiTietSV(MSSV);
                         break;
                     case 3:
                         danhSachMH.XuatDanhSachMH();
                         Console.ForegroundColor = ConsoleColor.Blue;
                         Console.Write("Nhập MSSV cần xem số môn học đăng ký:  ");
                         Console.ResetColor();
-                        danhSachMonDangKy.SoMonHocSinhVienDangKy(int.Parse(Console.ReadLine()));
+                        #region MSSV is an integer
+                        res = int.TryParse(Console.ReadLine(), out MSSV);
+                        if (!res)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Mã sinh viên phải là số nguyên.");
+                            Console.ResetColor();
+                            break;
+                        }
+                        #endregion
+                        danhSachMonDangKy.SoMonHocSinhVienDangKy(MSSV);
                         break;
                     case 4:
                         while (true)
                         {
                             Console.ForegroundColor = ConsoleColor.Blue;
                             Console.Write("Nhập mã sinh viên cần xem điểm: ");
-                            MSSV = int.Parse(Console.ReadLine());
+
+                            #region MSSV is an integer
+                            res = int.TryParse(Console.ReadLine(), out MSSV);
+                            if (!res)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Mã sinh viên phải là số nguyên.");
+                                Console.ResetColor();
+                                break;
+                            }
+                            #endregion
                             Console.ResetColor();
                             if (danhSachSV.ListSV.SingleOrDefault(x => x.MSSV == MSSV) == null)
                             {
@@ -84,7 +130,7 @@ namespace Practice1_QLSV
                             }
                             else break;
                         }
-
+                        if (!res) break;
                         Console.ForegroundColor = ConsoleColor.Blue;
                         Console.WriteLine("{0,-20} {1,-20} {2,-20} {3,-20}", "Tên môn học", "Điểm quá trình", "Điểm thành phần", "Điểm tổng kết");
                         Console.ResetColor();
@@ -102,7 +148,16 @@ namespace Practice1_QLSV
                         {
                             Console.ForegroundColor = ConsoleColor.Blue;
                             Console.Write("Nhập mã sinh viên cần nhập điểm: ");
-                            MSSV = int.Parse(Console.ReadLine());
+                            #region MSSV is an integer
+                            res = int.TryParse(Console.ReadLine(), out MSSV);
+                            if (!res)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Mã sinh viên phải là số nguyên.");
+                                Console.ResetColor();
+                                break;
+                            }
+                            #endregion
                             Console.ResetColor();
                             if (danhSachSV.ListSV.SingleOrDefault(x => x.MSSV == MSSV) == null)
                             {
@@ -128,10 +183,12 @@ namespace Practice1_QLSV
                             else if (danhSachMonDangKy.ListMonDangKy.Where(x => (x.MaMH == MaMH) && (x.MSSV == MSSV)).Count() == 0)
                             {
                                 danhSachMonDangKy.NhapDiemSinhVien(MSSV, MaMH);
+                                res = true;
                                 break;
                             }
                             else
                             {
+                                res = false;
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("Môn học đã nhập điểm.");
                                 Console.ResetColor();
@@ -139,16 +196,28 @@ namespace Practice1_QLSV
                             }
 
                         }
+                        if (!res) break;
                         write_json = JsonConvert.SerializeObject(danhSachMonDangKy.ListMonDangKy.ToArray(), Formatting.Indented);
-                        File.WriteAllText("../../Data/Mondanky.json", write_json);
-                        Console.WriteLine("Đã nhập");
+                        File.WriteAllText("../../Data/Mondangky.json", write_json);
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Nhập điểm thành công");
+                        Console.ResetColor();
                         break;
                     case 6:
                         while (true)
                         {
                             Console.ForegroundColor = ConsoleColor.Blue;
                             Console.Write("Nhập mã sinh viên cần xem kết quả: ");
-                            MSSV = int.Parse(Console.ReadLine());
+                            #region MSSV is an integer
+                            res = int.TryParse(Console.ReadLine(), out MSSV);
+                            if (!res)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Mã sinh viên phải là số nguyên.");
+                                Console.ResetColor();
+                                break;
+                            }
+                            #endregion
                             Console.ResetColor();
                             if (danhSachSV.ListSV.SingleOrDefault(x => x.MSSV == MSSV) == null)
                             {
@@ -158,7 +227,7 @@ namespace Practice1_QLSV
                             }
                             else break;
                         }
-
+                        if (!res) break;
                         Console.ForegroundColor = ConsoleColor.Blue;
                         Console.WriteLine("{0,-20} {1,-20} {2,-20} {3,-20} {4,-20}", "Tên môn học", "Điểm quá trình", "Điểm thành phần", "Điểm tổng kết", "Kết quả");
                         Console.ResetColor();

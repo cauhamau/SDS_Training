@@ -31,7 +31,7 @@ namespace Practice3_ServiceDI_StudentManagement.Services
             var t = new TablePrinter("MSSV", "Họ tên", "Giới tính", "Ngày sinh", "Lớp", "Khoá");
             foreach (var s in students)
             {
-                t.AddRow(s.MSSV, s.HOTENSV,s.GIOITINH,s.NGAYSINH,s.LOP,s.KHOA);
+                t.AddRow(s.MSSV, s.HOTENSV,s.GIOITINH,s.NGAYSINH.ToString("dd/mm/yyyy"), s.LOP,s.KHOA);
             }
             t.Print();
 
@@ -41,8 +41,23 @@ namespace Practice3_ServiceDI_StudentManagement.Services
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("Nhập mã sinh viên để xem thông tin: ");
             Console.ResetColor();
-            int MSSV = int.Parse(Console.ReadLine());
+
+            #region MSSV is an integer
+            bool res;
+            res = int.TryParse(Console.ReadLine(),out int MSSV);
+            if (!res)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Mã sinh viên phải là số nguyên.");
+                Console.ResetColor();
+                return;
+            }
+            #endregion
+
+            #region Search MSSV
             Student s = students.SingleOrDefault(x => x.MSSV == MSSV);
+
+            
             if (s != null)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -56,6 +71,7 @@ namespace Practice3_ServiceDI_StudentManagement.Services
                 Console.WriteLine("=> Không tìm thấy sinh viên.");
                 Console.ResetColor();
             }
+            #endregion
         }
 
         public void CountSubjects(List<Student> students)
@@ -63,7 +79,17 @@ namespace Practice3_ServiceDI_StudentManagement.Services
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.Write("Nhập mã sinh viên để xem thông tin: ");
             Console.ResetColor();
-            int MSSV = int.Parse(Console.ReadLine());
+            #region MSSV is an integer
+            bool res;
+            res = int.TryParse(Console.ReadLine(), out int MSSV);
+            if (!res)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Mã sinh viên phải là số nguyên.");
+                Console.ResetColor();
+                return;
+            }
+            #endregion
             Student s = students.SingleOrDefault(x => x.MSSV == MSSV);
             if (s != null)
             {
@@ -106,7 +132,17 @@ namespace Practice3_ServiceDI_StudentManagement.Services
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("Nhập mã sinh viên để xem điểm: ");
             Console.ResetColor();
-            int MSSV = int.Parse(Console.ReadLine());
+            #region MSSV is an integer
+            bool res;
+            res = int.TryParse(Console.ReadLine(), out int MSSV);
+            if (!res)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Mã sinh viên phải là số nguyên.");
+                Console.ResetColor();
+                return;
+            }
+            #endregion
             Student s = students.SingleOrDefault(x => x.MSSV == MSSV);
             if (s != null)
             {
@@ -183,8 +219,19 @@ namespace Practice3_ServiceDI_StudentManagement.Services
             subjects.ShowList(ListMonHoc);
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("Nhập mã sinh viên để nhập điểm: ");
+
+            #region MSSV is an integer
+            bool res;
+            res = int.TryParse(Console.ReadLine(), out int MSSV);
+            if (!res)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Mã sinh viên phải là số nguyên.");
+                Console.ResetColor();
+                return;
+            }
+            #endregion
             
-            int MSSV = int.Parse(Console.ReadLine());
             Student s = students.SingleOrDefault(x => x.MSSV == MSSV);
             if (s != null)
             {
@@ -194,12 +241,51 @@ namespace Practice3_ServiceDI_StudentManagement.Services
                 MonHoc monhoc = ListMonHoc.SingleOrDefault(x => x.MaMH.ToString().Replace(" ","") == MAMH);
                 if  (monhoc != null)
                 {
-                    Console.Write("Nhập điểm quá trình: ");
-                    float DQT = float.Parse(Console.ReadLine());
-                    Console.Write("Nhập điểm thành phần: ");
-                    float DTP = float.Parse(Console.ReadLine());
+                    float DQT, DTP;
+                    //Nhập điểm quá trình
+                    while (true) 
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.Write("Nhập điểm quá trình: ");
+                        Console.ResetColor();
+                        res = float.TryParse(Console.ReadLine(), out DQT);
+                        if (!res)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Điểm phải là số thực.");
+                            Console.ResetColor();
+                        }
+                        else if (DQT > 10 || DQT < 0)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Điểm phải có giá trị từ 0 đến 10.");
+                            Console.ResetColor();
+                        }
+                        else break;
+                    }
+
+                    //Nhập điểm thành phần
+                    while (true)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.Write("Nhập điểm thành phần: ");
+                        Console.ResetColor();
+                        res = float.TryParse(Console.ReadLine(), out DTP);
+                        if (!res)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Điểm phải là số thực.");
+                            Console.ResetColor();
+                        }
+                        else if (DTP > 10 || DTP < 0)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Điểm phải có giá trị từ 0 đến 10.");
+                            Console.ResetColor();
+                        }
+                        else break;
+                    }
                     _studentData.InputDataScore(MSSV, MAMH, DQT, DTP);
-                    Console.ResetColor();
                 }
                 else
                 {

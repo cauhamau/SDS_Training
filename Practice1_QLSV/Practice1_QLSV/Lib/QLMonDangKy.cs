@@ -46,35 +46,56 @@ namespace Practice1_QLSV.Lib
             MonDangKy listmonDK = new MonDangKy();
             listmonDK.MSSV = MSSV;
             listmonDK.MaMH = MaMH;
-            
+            bool res;
             while (true)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write("Nhập điểm quá trình: ");
                 Console.ResetColor();
-                listmonDK.DQT = int.Parse(Console.ReadLine());
-                if (listmonDK.DQT > 10 || listmonDK.DQT < 0)
+                res = float.TryParse(Console.ReadLine(), out float temp);
+                if (!res)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Nhập sai, vui lòng nhập lại.");
+                    Console.WriteLine("Điểm phải là số thực.");
                     Console.ResetColor();
                 }
-                else break;
+                else if (temp > 10 || temp < 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Điểm phải có giá trị từ 0 đến 10.");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    listmonDK.DQT = temp;
+                    break;
+                }
             }
 
             while (true)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write("Nhập điểm quá trình: ");
+                Console.Write("Nhập điểm thành phần: ");
                 Console.ResetColor();
-                listmonDK.DTP = int.Parse(Console.ReadLine());
-                if (listmonDK.DTP > 10 || listmonDK.DTP < 0)
+                res = float.TryParse(Console.ReadLine(), out float temp);
+                if (!res)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Nhập sai, vui lòng nhập lại.");
+                    Console.WriteLine("Điểm phải là số thực.");
                     Console.ResetColor();
                 }
-                else break;
+                else if (temp > 10 || temp < 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Điểm phải có giá trị từ 0 đến 10.");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    listmonDK.DTP = temp;
+                    break;
+                }
+                
             }
             ListMonDangKy.Add(listmonDK);
 

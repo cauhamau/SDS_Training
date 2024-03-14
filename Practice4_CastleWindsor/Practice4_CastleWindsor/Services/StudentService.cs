@@ -41,7 +41,19 @@ namespace Practice4_CastleWindsor.Services
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("Nhập mã sinh viên để xem thông tin: ");
             Console.ResetColor();
-            int MSSV = int.Parse(Console.ReadLine());
+
+            #region MSSV is an integer
+            bool res;
+            res = int.TryParse(Console.ReadLine(), out int MSSV);
+            if (!res)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Mã sinh viên phải là số nguyên.");
+                Console.ResetColor();
+                return;
+            }
+            #endregion
+
             Student s = students.SingleOrDefault(x => x.MSSV == MSSV);
             if (s != null)
             {
@@ -63,7 +75,18 @@ namespace Practice4_CastleWindsor.Services
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.Write("Nhập mã sinh viên để xem thông tin: ");
             Console.ResetColor();
-            int MSSV = int.Parse(Console.ReadLine());
+            #region MSSV is an integer
+            bool res;
+            res = int.TryParse(Console.ReadLine(), out int MSSV);
+            if (!res)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Mã sinh viên phải là số nguyên.");
+                Console.ResetColor();
+                return;
+            }
+            #endregion
+
             Student s = students.SingleOrDefault(x => x.MSSV == MSSV);
             if (s != null)
             {
@@ -106,7 +129,19 @@ namespace Practice4_CastleWindsor.Services
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("Nhập mã sinh viên để xem điểm: ");
             Console.ResetColor();
-            int MSSV = int.Parse(Console.ReadLine());
+
+            #region MSSV is an integer
+            bool res;
+            res = int.TryParse(Console.ReadLine(), out int MSSV);
+            if (!res)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Mã sinh viên phải là số nguyên.");
+                Console.ResetColor();
+                return;
+            }
+            #endregion
+
             Student s = students.SingleOrDefault(x => x.MSSV == MSSV);
             if (s != null)
             {
@@ -144,7 +179,21 @@ namespace Practice4_CastleWindsor.Services
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("Nhập mã sinh viên để xem điểm: ");
             Console.ResetColor();
-            int MSSV = int.Parse(Console.ReadLine());
+
+            #region MSSV is an integer
+            bool res;
+            res = int.TryParse(Console.ReadLine(), out int MSSV);
+            if (!res)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Mã sinh viên phải là số nguyên.");
+                Console.ResetColor();
+                return;
+            }
+            #endregion
+
+
+
             Student s = students.SingleOrDefault(x => x.MSSV == MSSV);
             if (s != null)
             {
@@ -183,8 +232,22 @@ namespace Practice4_CastleWindsor.Services
             subjects.ShowList(ListMonHoc);
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("Nhập mã sinh viên để nhập điểm: ");
-            
-            int MSSV = int.Parse(Console.ReadLine());
+
+            #region MSSV is an integer
+            bool res;
+            res = int.TryParse(Console.ReadLine(), out int MSSV);
+            if (!res)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Mã sinh viên phải là số nguyên.");
+                Console.ResetColor();
+                return;
+            }
+            #endregion
+
+
+
+
             Student s = students.SingleOrDefault(x => x.MSSV == MSSV);
             if (s != null)
             {
