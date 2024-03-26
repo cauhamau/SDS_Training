@@ -1,0 +1,28 @@
+﻿
+
+
+@{
+    ViewBag.Title = "Chi Tiết Sinh Viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2 class="text-center">Thông tin sinh viên</h2>
+
+<div class="container">
+
+    @{
+        Html.RenderAction("InfoStudent", "Home", new { Id = ViewBag.Id});
+    }
+    <br />
+
+    <br />
+    @*@{
+        Html.RenderAction("ResultSubjectRegisted", "Home", new { Id = ViewBag.Id });
+    }*@
+
+</div>
+
+
+<div id="list-subject-container">
+
+</div>
+

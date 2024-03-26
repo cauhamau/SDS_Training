@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Practice6a_MVC.Models.Student>
+@{
+    ViewBag.Title = "Index";
+}
+<link rel="stylesheet" href="~/Content/Site.css">
+
+<h2 class="text-center">Danh sách sinh viên</h2>
+<div class="table-wrapper">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("Mã số sinh viên")
+            </th>
+            <th>
+                @Html.DisplayName("Họ tên")
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MSSV)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HOTENSV)
+                </td>
+                <td>
+                    @Html.ActionLink("Chi tiết", "Details", new { Id = item.MSSV }) |
+                    @Html.ActionLink("Nhập điểm", "InputScore", new { Id = item.MSSV })
+
+                </td>
+            </tr>
+        }
+    </table>
+</div>

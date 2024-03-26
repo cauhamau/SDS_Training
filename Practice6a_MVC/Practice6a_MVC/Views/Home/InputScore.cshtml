@@ -1,0 +1,23 @@
+﻿@model  Practice6a_MVC.Models.Subject
+@{
+    ViewBag.Title = "InputScore";
+}
+
+@{
+    Html.RenderAction("InfoStudent", "Home", new { Id = ViewBag.IdStudent });
+}
+<br />
+
+<div class="text-uppercase fs-3 fw-bold">
+    <span class="">Nhập điểm môn học</span>
+</div>
+
+@{Html.RenderAction("PostScore", "Home", new { Id = ViewBag.IdStudent }); }
+
+
+<br />
+<br />
+@{
+    Html.RenderAction("ResultSubjectRegisted", "Home", new { Id = ViewBag.IdStudent });
+}
+
