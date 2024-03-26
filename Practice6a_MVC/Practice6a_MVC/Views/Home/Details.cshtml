@@ -6,18 +6,20 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h2 class="text-center">Thông tin sinh viên</h2>
-
+@Html.ActionLink("Trở về trang chủ", "Index")
+<br />
+<br />
 <div class="container">
 
     @{
-        Html.RenderAction("InfoStudent", "Home", new { Id = ViewBag.Id});
+        Html.RenderAction("InfoStudent", "Home", new { Id = ViewBag.Id });
     }
     <br />
 
     <br />
-    @*@{
-        Html.RenderAction("ResultSubjectRegisted", "Home", new { Id = ViewBag.Id });
-    }*@
+    @{
+            Html.RenderAction("ResultSubjectRegisted", "Home", new { Id = ViewBag.Id });
+     }
 
 </div>
 

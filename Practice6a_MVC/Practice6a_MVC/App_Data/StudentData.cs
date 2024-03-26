@@ -63,7 +63,7 @@ namespace Practice6a_MVC.App_Data
             return result;
         }
 
-        public string InputDataScore(SubjectRegisted subjectRegisted)
+        public string InsertDataScore(SubjectRegisted subjectRegisted)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {

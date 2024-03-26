@@ -64,7 +64,7 @@ namespace Practice6a_MVC.Controllers
             return PartialView();
         }
 
-        public ActionResult InputScore(int Id)
+        public ActionResult InsertScore(int Id)
         {
             ViewBag.IdStudent = Id;
             IList<Subject> subjects = _subjectData.GetAll();
@@ -77,6 +77,7 @@ namespace Practice6a_MVC.Controllers
             IList<Subject> subjects = _subjectData.GetAll();
 
             //ViewBag.Subjects = subjects;
+            ViewBag.response = null;
             ViewBag.Subjects = new SelectList(subjects, "MAMH", "TENMH");
             return PartialView();
         }
@@ -85,11 +86,12 @@ namespace Practice6a_MVC.Controllers
         {
             //ViewBag.IdStudent = Id;
             IList<Subject> subjects = _subjectData.GetAll();
-
+            ViewBag.IdStudent = subjectRegisted.MSSV;
             //ViewBag.Subjects = subjects;
             ViewBag.Subjects = new SelectList(subjects, "MAMH", "TENMH");
-
-            _studentData.InputDataScore(subjectRegisted);
+            
+            string response = _studentData.InsertDataScore(subjectRegisted);
+            ViewBag.response = response;
             return PartialView();
             //return PartialView();//RedirectToAction("ResultSubjectRegisted", new { Id = subjectRegisted.MSSV });
         }

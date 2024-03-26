@@ -11,6 +11,6 @@ namespace Practice6a_MVC.Interfaces
     internal interface IStudentData : IBasicService<Student>
     {
         DataTable GetResultSubjectRegisted(int id);
-        string InputDataScore(SubjectRegisted subjectRegisted);
+        string InsertDataScore(SubjectRegisted subjectRegisted);
     }
 }

@@ -197,7 +197,7 @@
     <Content Include="Views\Home\Details.cshtml" />
     <Content Include="Views\Home\ResultSubjectRegisted.cshtml" />
     <Content Include="Views\Home\InfoStudent.cshtml" />
-    <Content Include="Views\Home\InputScore.cshtml" />
+    <Content Include="Views\Home\InsertScore.cshtml" />
     <Content Include="Views\Home\PostScore.cshtml" />
   </ItemGroup>
   <ItemGroup />

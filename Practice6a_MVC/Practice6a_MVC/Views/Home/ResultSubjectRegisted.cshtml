@@ -18,7 +18,9 @@
 
     @foreach (System.Data.DataRow row in resultStudent.Rows)
     {
-        <tr>
+
+     {if(row["KETQUA"].ToString() == "Fail") {}}
+        <tr class="@(row["KETQUA"].ToString() == "Fail" ? "text-danger fw-bold" : "")">
             <td> @row["MAMH"]</td>
             <td> @row["TENMH"]</td>
             <td title="Trọng số: @row["RATEDQT"]"> @float.Parse(row["DQT"].ToString())</td>
