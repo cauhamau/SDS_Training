@@ -1,0 +1,22 @@
+﻿Installing assembly 'H:\InternS\Training\Practice6b_WindowsService\Practice6b_WindowsService\bin\Debug\Practice6b_WindowsService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = H:\InternS\Training\Practice6b_WindowsService\Practice6b_WindowsService\bin\Debug\Practice6b_WindowsService.InstallLog
+   assemblypath = H:\InternS\Training\Practice6b_WindowsService\Practice6b_WindowsService\bin\Debug\Practice6b_WindowsService.exe
+Installing service Practice6b_WindowsService...
+Service Practice6b_WindowsService has been successfully installed.
+Creating EventLog source Practice6b_WindowsService in log Application...
+Committing assembly 'H:\InternS\Training\Practice6b_WindowsService\Practice6b_WindowsService\bin\Debug\Practice6b_WindowsService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = H:\InternS\Training\Practice6b_WindowsService\Practice6b_WindowsService\bin\Debug\Practice6b_WindowsService.InstallLog
+   assemblypath = H:\InternS\Training\Practice6b_WindowsService\Practice6b_WindowsService\bin\Debug\Practice6b_WindowsService.exe
+Uninstalling assembly 'H:\InternS\Training\Practice6b_WindowsService\Practice6b_WindowsService\bin\Debug\Practice6b_WindowsService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = H:\InternS\Training\Practice6b_WindowsService\Practice6b_WindowsService\bin\Debug\Practice6b_WindowsService.InstallLog
+   assemblypath = H:\InternS\Training\Practice6b_WindowsService\Practice6b_WindowsService\bin\Debug\Practice6b_WindowsService.exe
+Removing EventLog source Practice6b_WindowsService.
+An exception occurred during the uninstallation of the System.Diagnostics.EventLogInstaller installer.
+System.Security.SecurityException: Requested registry access is not allowed.
+An exception occurred while uninstalling. This exception will be ignored and the uninstall will continue. However, the application might not be fully uninstalled after the uninstall is complete.
