@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "InsertScore";
+}
+@Html.ActionLink("Trở về trang chủ", "Index","Home")
+@{
+    Html.RenderAction("InfoStudent", "Student", new { Id = ViewBag.IdStudent });
+}
+<br />
+
+
+
+@{Html.RenderAction("PostScore", "SubjectRegisted", new { Id = ViewBag.IdStudent }); }
+
+
+<br />
+<br />
+@{
+    Html.RenderAction("ResultSubjectRegisted", "SubjectRegisted", new { Id = ViewBag.IdStudent });
+}
+

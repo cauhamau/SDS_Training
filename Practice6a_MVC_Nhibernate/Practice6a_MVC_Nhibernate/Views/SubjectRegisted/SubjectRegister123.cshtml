@@ -1,0 +1,104 @@
+﻿@model Practice6a_MVC_Nhibernate.Models.SubjectRegisted
+
+@{
+    ViewBag.Title = "SubjectRegister";
+}
+@Html.ActionLink("Trở về trang chủ", "Index", "Home")
+@{
+    Html.RenderAction("InfoStudent", "Student", new { Id = ViewBag.IdStudent });
+}
+<br />
+<br />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-control">
+        <div class="text-uppercase fs-3 fw-bold">
+            Đăng ký môn học
+        </div>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row mb-3">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.MAMH, "Mã môn học:", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-10">
+                @Html.DropDownList("MAMH", new SelectList(ViewBag.subject, "MAMH", "MAMH"), new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MAMH, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @Html.HiddenFor(model => model.MSSV, new { Value = ViewBag.IdStudent })
+        <div class="row mb-3">
+            <div class="col-md-2">
+                Tên môn học:
+            </div>
+            <div class="col-md-2">
+                <div id="TENMH"></div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-2">
+                Số tiết:
+            </div>
+            <div class="col-md-2">
+                <div id="SOTIET"></div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-2">
+                Tỉ lệ điểm quá trình:
+            </div>
+            <div class="col-md-2">
+                <div id="RATEDQT"></div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-2">
+                Tỉ lệ điểm thành phần:
+            </div>
+            <div class="col-md-2">
+                <div id="RATEDTP"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Submit" class="btn btn-primary fw-bold" />
+            </div>
+        </div>
+    </div>
+}
+
+<br />
+<br />
+@{
+    Html.RenderAction("ResultSubjectRegisted", "SubjectRegisted", new { Id = ViewBag.IdStudent });
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    var subjects = @Html.Raw(Json.Encode(ViewBag.subject));
+
+    function SelectSubject(subjects, maMH) {
+        var matchedSubjects = $.grep(subjects, function (subject) {
+            return subject.MAMH === maMH;
+        });
+        $('#TENMH').text(matchedSubjects[0].TENMH);
+        $('#SOTIET').text(matchedSubjects[0].SOTIET);
+        $('#RATEDQT').text((matchedSubjects[0].RATEDQT * 100) + '%');
+        $('#RATEDTP').text((matchedSubjects[0].RATEDTP*100) + '%');
+    }
+    SelectSubject(subjects, $('#MAMH').val());
+    $(document).ready(function () {
+        // Khi giá trị của dropdown thay đổi
+        $('#MAMH').change(function () {
+            SelectSubject(subjects, $('#MAMH').val());
+        });
+    });
+
+</script>
+
+

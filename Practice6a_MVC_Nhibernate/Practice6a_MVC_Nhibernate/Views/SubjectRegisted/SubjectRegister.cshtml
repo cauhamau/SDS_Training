@@ -1,0 +1,63 @@
+﻿<div class="form-control">
+    <div class="text-uppercase fs-3 fw-bold">
+        Đăng ký môn học
+    </div>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="row mb-3">
+        <div class="col-md-2">
+            Mã môn học:
+        </div>
+        <div class="col-md-10">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Mã môn học</th>
+                        <th>Tên môn học</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var subject in ViewBag.subject)
+                    {
+                        <tr>
+                            <td><input type="checkbox" name="selectedSubjects" value="@subject.MAMH" /></td>
+                            <td>@subject.MAMH</td>
+                            <td>@subject.TENMH</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @*@Html.HiddenFor(model => model.MSSV, new { Value = ViewBag.IdStudent })*@
+
+    <!-- Các trường thông tin khác -->
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Submit" class="btn btn-primary fw-bold" />
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Khi người dùng chọn một checkbox
+        $('input[name="selectedSubjects"]').change(function () {
+            var checked = $(this).prop('checked');
+            if (checked) {
+                // Nếu checkbox được chọn, hiển thị các thông tin khác
+                var row = $(this).closest('tr');
+                $('#TENMH').text(row.find('td:eq(2)').text());
+                // Cập nhật các trường thông tin khác tương ứng
+            } else {
+                // Nếu checkbox bị bỏ chọn, xóa các thông tin khác
+                $('#TENMH').text('');
+                // Xóa các trường thông tin khác tương ứng
+            }
+        });
+    });
+</script>
