@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Practice6a_MVC_Nhibernate.Models.Student>
+@{
+    ViewBag.Title = "Index";
+}
+<link rel="stylesheet" href="~/Content/Site.css">
+
+<h2 class="text-center">Danh sách sinh viên</h2>
+<div class="table-wrapper">
+    <table class="table">
+        <tr class="row">
+            <th class="col-4">
+                @Html.DisplayName("Mã số sinh viên")
+            </th>
+            <th class="col-4">
+                @Html.DisplayName("Họ tên")
+            </th>
+            <th class="col-4"></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr class="row">
+                <td class="col-4">
+                    @Html.DisplayFor(modelItem => item.MSSV)
+                </td>
+                <td class="col-4">
+                    @Html.DisplayFor(modelItem => item.HOTENSV)
+                </td>
+                <td class="col-4">
+                    @Html.ActionLink("Lý lịch", "Details", "Student", new { Id = item.MSSV }, null) |
+                    @Html.ActionLink("Kết quả học tập", "Result", "Student", new { Id = item.MSSV }, null) |
+                    @Html.ActionLink("Đăng ký môn học", "SubjectRegister", "SubjectRegisted", new { Id = item.MSSV }, null) |
+                    @Html.ActionLink("Nhập điểm", "InsertScore", "SubjectRegisted", new { Id = item.MSSV }, null)
+
+                </td>
+            </tr>
+        }
+    </table>
+</div>

@@ -28,6 +28,11 @@ namespace Practice6a_MVC_Nhibernate.Services
             return _studentData.GetByID(key);
         }
 
+        public string SaveStudent(Student student)
+        {
+            return _studentData.SaveStudent(student);
+        }
+
         //public DataTable GetResultSubjectRegisted(int id)
         //{
         //    return _studentData.GetResultSubjectRegisted(id);

@@ -5,34 +5,80 @@
 <link rel="stylesheet" href="~/Content/Site.css">
 
 <h2 class="text-center">Danh sách sinh viên</h2>
-<div class="table-wrapper">
-    <table class="table">
-        <tr class="row">
-            <th class="col-4">
-                @Html.DisplayName("Mã số sinh viên")
-            </th>
-            <th class="col-5">
-                @Html.DisplayName("Họ tên")
-            </th>
-            <th class="col-3"></th>
+<table id="myTable" class="display">
+    <thead>
+        <tr>
+            <th>@Html.DisplayName("Mã số sinh viên")</th>
+            <th>@Html.DisplayName("Họ tên")</th>
+            <th></th>
         </tr>
-
+    </thead>
+    <tbody>
         @foreach (var item in Model)
         {
-            <tr class="row">
-                <td class="col-4">
+            <tr>
+                <td>
                     @Html.DisplayFor(modelItem => item.MSSV)
                 </td>
-                <td class="col-5">
+                <td>
                     @Html.DisplayFor(modelItem => item.HOTENSV)
                 </td>
-                <td class="col-3">
-                    @Html.ActionLink("Chi tiết", "Details", "Student", new { Id = item.MSSV }, null) |
+                <td class="text-center">
+                    @Html.ActionLink("Lý lịch", "Details", "Student", new { Id = item.MSSV }, null) |
+                    @Html.ActionLink("Kết quả học tập", "Result", "Student", new { Id = item.MSSV }, null) |
                     @Html.ActionLink("Đăng ký môn học", "SubjectRegister", "SubjectRegisted", new { Id = item.MSSV }, null) |
                     @Html.ActionLink("Nhập điểm", "InsertScore", "SubjectRegisted", new { Id = item.MSSV }, null)
 
                 </td>
             </tr>
         }
-    </table>
-</div>
+    </tbody>
+
+</table>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('#myTable').DataTable({
+            "columnDefs": [
+                { "orderable": false, "targets": 2 },
+                { "className": "text-start", "targets": [0, 1] }
+            ],
+            language: {
+                processing: "Đang tải dữ liệu",
+                search: "Tìm kiếm",
+                lengthMenu: "_MENU_ mỗi trang",
+                info: "_START_-_END_ trong số _TOTAL_",
+                infoEmpty: "Không có dữ liệu",
+                infoFiltered: "(Không tìm thấy dữ liệu phù hợp)",
+                loadingRecords: "",
+                zeroRecords: "Không tìm thấy thông tin",
+                emptyTable: "Không có dữ liệu",
+                paginate: {
+                    first: "Trang đầu",
+                    previous: "Trang trước",
+                    next: "Trang sau",
+                    last: "Trang cuối"
+                },
+                aria: {
+                    sortAscending: ": Đang sắp xếp",
+                    sortDescending: ": Đang sắp xếp",
+                }
+            },
+        });
+
+        var message = @Html.Raw(Json.Encode(TempData["success"]));
+        if (message == null) {
+            toastr.options.timeOut = 2000; // 2s
+            toastr.info('Page Loaded!');
+        }
+        else {
+            toastr.options.timeOut = 2000; // 2s
+            toastr.info(message);
+        }
+    });
+</script>
+

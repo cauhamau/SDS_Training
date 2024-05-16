@@ -1,27 +1,31 @@
 ﻿@{
     ViewBag.Title = "ResultSubjectRegisted";
+    ViewBag.Id = ViewBag.Id;
     var resultStudent = ViewBag.resultStudent as System.Data.DataTable;
 }
+
+
 <div class="text-uppercase fs-3 fw-bold">
     <span class="">Kết quả học tập </span>
 </div>
-<table class="table">
+<table class="table" id="resultTable">
     <tr>
-        <th></th>
+        <th class="">Lần học</th>
         <th class="">Mã môn học</th>
         <th class="">Tên môn học</th>
         <th class="">Điểm quá trình</th>
         <th class="">Điểm thành phần</th>
         <th class="">Trung bình môn</th>
         <th class="">Kết quả</th>
+        <th class=""></th>
     </tr>
 
     @foreach (System.Data.DataRow row in resultStudent.Rows)
     {
-        <tr class="@((row["KETQUA"].ToString() == "Fail" && row["DTK"]!=DBNull.Value) ? "text-danger fw-bold" : (int.Parse(row["SOLANHOC"].ToString())>0 ? "text-warning fw-bold" : ""))">
-            <td><input type="checkbox" name="selectedSubjects" value="@row["MAMH"]" /></td>
+        <tr class="@((row["KETQUA"].ToString() == "Fail" && row["DTK"]!=DBNull.Value) ? "text-danger fw-bold" : (int.Parse(row["SOLANHOC"].ToString())>1 ? "text-warning fw-bold" : ""))">
             @if (row["DTK"] != DBNull.Value)
             {
+                <td> @row["SOLANHOC"] </td>
                 <td> @row["MAMH"]</td>
                 <td> @row["TENMH"]</td>
                 <td title="Trọng số: @row["RATEDQT"]"> @float.Parse(row["DQT"].ToString())</td>
@@ -31,6 +35,7 @@
             }
             else
             {
+                <td> @row["SOLANHOC"] </td>
                 <td> @row["MAMH"]</td>
                 <td> @row["TENMH"]</td>
                 if (row["DQT"] != DBNull.Value)
@@ -50,10 +55,40 @@
                     <td></td>
                 }
                 <td> </td>
-                <td> </td>
+                <td> @row["KETQUA"]  </td>
 
+            }
+
+            @using (Html.BeginForm())
+            {
+                <td style="display: none;">
+                    <input id="SOLANHOC" name="SOLANHOC" value=@row["SOLANHOC"] />
+                </td>
+                <td style="display: none;">
+                    <input id="MAMH" name="MAMH" value=@row["MAMH"] style="display: none;" />
+                </td>
+                <td><button type="submit" class="btn btn-danger delete-btn">Xóa</button></td>
             }
         </tr>
 
     }
 </table>
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    var Id = @Html.Raw(Json.Encode(ViewBag.Id));
+    var response = @Html.Raw(Json.Encode(ViewBag.response));
+    $(document).ready(function () {
+        if (response == "Xoá thành công") {
+            toastr.options.timeOut = 2000; // 2s
+            toastr.success("Xoá thành công");
+        }
+        else if (response!=null) {
+            toastr.options.timeOut = 2000; // 2s
+            toastr.success(response);
+        }
+
+    })
+
+</script>

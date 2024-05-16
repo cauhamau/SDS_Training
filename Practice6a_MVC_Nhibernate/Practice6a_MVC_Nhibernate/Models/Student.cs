@@ -10,7 +10,7 @@ namespace Practice6a_MVC_Nhibernate.Models
     public class Student
     {
         [DebuggerDisplay("Mã số sinh viên")]
-        int _MSSV;
+        int? _MSSV;
         string _HOTENSV;
         string _GIOITINH;
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
@@ -28,7 +28,7 @@ namespace Practice6a_MVC_Nhibernate.Models
         //    _KHOA = kHOA;
         //}
 
-        public virtual int MSSV { get => _MSSV; set => _MSSV = value; }
+        public virtual int? MSSV { get => _MSSV; set => _MSSV = value; }
         public virtual string HOTENSV { get => _HOTENSV; set => _HOTENSV = value; }
         public virtual string GIOITINH { get => _GIOITINH; set => _GIOITINH = value; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]

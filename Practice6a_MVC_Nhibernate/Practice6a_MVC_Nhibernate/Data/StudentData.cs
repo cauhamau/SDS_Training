@@ -71,70 +71,27 @@ namespace Practice6a_MVC_Nhibernate.Data
             return student;
         }
 
-        //public DataTable GetResultSubjectRegisted(int id)
-        //{
-        //    return null;//throw new NotImplementedException();
-        //}
+        public string SaveStudent(Student student)
+        {
 
-        //public DataTable GetResultSubjectRegisted(int id)
-        //{
-        //    DataTable dataTable = new DataTable();
-        //    using (var session = _sefact.OpenSession())
-        //    {
-        //        string sqlQuery = "Select DANGKYMH.MAMH,TENMH, DTP, DQT, RATEDQT, RATEDTP, ROUND((DTP*RATEDTP+DQT*RATEDQT),2) AS DTK," +
-        //                          " CASE WHEN ROUND((DTP*RATEDTP+DQT*RATEDQT),2) > 4.0 THEN 'Pass' ELSE 'Fail' END AS KETQUA" +
-        //                          " FROM DANGKYMH INNER JOIN MONHOC ON MONHOC.MAMH=DANGKYMH.MAMH" +
-        //                          $" WHERE MSSV={id}";
-        //        IQuery query = session.CreateSQLQuery(sqlQuery);
+            using (var session = _sefact.OpenSession())
+            {
+                using (var tx = session.BeginTransaction())
+                {
+                    try
+                    {
+                        session.SaveOrUpdate(student);
+                        tx.Commit();
 
-        //        dataTable.Columns.Add("MAMH", typeof(string));
-        //        dataTable.Columns.Add("TENMH", typeof(string));
-        //        dataTable.Columns.Add("DTP", typeof(decimal));
-        //        dataTable.Columns.Add("DQT", typeof(decimal));
-        //        dataTable.Columns.Add("RATEDQT", typeof(string));
-        //        dataTable.Columns.Add("RATEDTP", typeof(string));
-        //        dataTable.Columns.Add("DTK", typeof(decimal));
-        //        dataTable.Columns.Add("KETQUA", typeof(string));
-
-        //        var results = query.List<object[]>();
-        //        foreach (var row in results)
-        //        {
-        //            dataTable.Rows.Add(row);
-        //        }
-
-        //        if (results is null) return null;
-        //    }
-
-        //    return dataTable;
-        //}
-
-        //public string InsertDataScore(SubjectRegisted subjectRegisted)
-        //{
-        //    using (var session = _sefact.OpenSession())
-        //    {
-        //        using (var tx = session.BeginTransaction())
-        //        {
-        //            try
-        //            {
-        //                session.Save(subjectRegisted);
-        //                tx.Commit();
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                if (ex.Message.Contains("Violation of PRIMARY KEY constraint"))
-        //                {
-        //                    return "Môn học đã có điểm";
-        //                }
-        //                else
-        //                {
-        //                    return ex.ToString();
-        //                }
-        //            }
-        //        }
-
-        //    }
-        //    return "Nhập điểm thành công";
-        //}
+                    }
+                    catch (Exception ex)
+                    {
+                        return ex.ToString();
+                    }
+                }
+            }
+            return "Cập nhật sinh viên thành công";
+        }
 
     }
 }

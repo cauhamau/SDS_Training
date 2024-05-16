@@ -12,5 +12,6 @@ namespace Practice6a_MVC_Nhibernate.Interfaces.IData
     {
         //DataTable GetResultSubjectRegisted(int id);
         //string InsertDataScore(SubjectRegisted subjectRegisted);
+        string SaveStudent(Student student);
     }
 }

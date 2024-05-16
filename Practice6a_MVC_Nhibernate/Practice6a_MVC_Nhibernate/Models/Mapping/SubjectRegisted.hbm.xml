@@ -6,13 +6,16 @@
     <class name = "SubjectRegisted" table="DANGKYMH" dynamic-update="true">
         <cache usage="read-write"/>
         <composite-id>
+            <key-property name="SOLANHOC"/>
             <key-property name="MAMH"/>
             <key-property name="MSSV"/>
-            <key-property name="SOLANHOC"/>
+            
         </composite-id>
-        <property name = "DTP"/>
+        
         <property name = "DQT"/>
-      
+        <property name = "DTP"/>
+        <property name = "DTK"/>
+        <property name = "KETQUA"/>
     </class>
 
  </hibernate-mapping>

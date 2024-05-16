@@ -1,11 +1,11 @@
 ﻿@model Practice6a_MVC_Nhibernate.Models.Student
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "AddStudent";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @Html.ActionLink("Trở về trang chủ", "Index", "Home")
-<h2 class="text-center mb-4">Thông tin sinh viên</h2>
+<h2 class="text-center mb-5">Thêm sinh viên mới</h2>
 
 @using (Html.BeginForm())
 {
@@ -13,22 +13,22 @@
 
     <div class="form-control">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="row mb-3 mt-3">
-                <div class="col-md-2">
-                    @Html.LabelFor(model => model.MSSV, "Mã số sinh viên:", htmlAttributes: new { @class = "control-label" })
-                </div>
-                <div class="col-md-2">
-                    <input type="number" name="MSSV" id="MSSV" class="form-control" value=@ViewBag.student.MSSV readonly required />
-                    @Html.ValidationMessageFor(model => model.MSSV, "", new { @class = "text-danger" })
-                </div>
+        @*<div class="row mb-3">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.MSSV, "Mã số sinh viên:", htmlAttributes: new { @class = "control-label" })
             </div>
+            <div class="col-md-2">
+                <input type="number" name="MSSV" id="MSSV" class="form-control" required />
+                @Html.ValidationMessageFor(model => model.MSSV, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
 
         <div class="row mt-3 mb-3">
             <div class="col-md-2">
                 @Html.LabelFor(model => model.HOTENSV, "Họ tên sinh viên:", htmlAttributes: new { @class = "control-label" })
             </div>
             <div class="col-md-2">
-                <input type="text" name="HOTENSV" id="HOTENSV" class="form-control" value="@ViewBag.student.HOTENSV" required />
+                <input type="text" name="HOTENSV" id="HOTENSV" class="form-control" required />
                 @Html.ValidationMessageFor(model => model.HOTENSV, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -38,18 +38,11 @@
                 @Html.LabelFor(model => model.GIOITINH, "Giới tính:", htmlAttributes: new { @class = "control-label" })
             </div>
             <div class="col-md-2">
-                @{
-                    var selectedGender = ViewBag.student.GIOITINH as string;
-                    var genderOptions = new[]
-                    {
-                        new SelectListItem { Text = selectedGender, Value = selectedGender },
-                        new SelectListItem { Text = selectedGender == "Nam" ? "Nữ" : "Nam", Value = selectedGender == "Nam" ? "Nữ" : "Nam" }
-                    };
-                }
-
-
-                @Html.DropDownList("GIOITINH", new SelectList(genderOptions, "Value", "Text", selectedGender), htmlAttributes: new { @class = "form-control" })
-
+                @Html.DropDownList("GIOITINH", new SelectList(new[]
+                {
+                    new SelectListItem { Text = "Nam", Value = "Nam" },
+                    new SelectListItem { Text = "Nữ", Value = "Nữ" }
+                }, "Value", "Text"), htmlAttributes: new { @class = "control-label" }) 
                 @Html.ValidationMessageFor(model => model.GIOITINH, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -58,9 +51,8 @@
             <div class="col-md-2">
                 @Html.LabelFor(model => model.NGAYSINH, "Ngày sinh:", htmlAttributes: new { @class = "control-label" })
             </div>
-
             <div class="col-md-2">
-                <input class="form-control datecontrol" id="NGAYSINH" name="NGAYSINH" type="date" value="@(((DateTime)ViewBag.student.NGAYSINH).ToString("yyyy-MM-dd"))" required />
+                <input class="form-control datecontrol" id="NGAYSINH" name="NGAYSINH" type="date" required />
                 @*@Html.TextBoxFor(model => model.NGAYSINH, "{0:yyyy-MM-dd}", new { @class = "form-control datecontrol", type = "date" })*@
                 @*@Html.EditorFor(model => model.NGAYSINH, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.NGAYSINH, "", new { @class = "text-danger" })
@@ -71,9 +63,8 @@
             <div class="col-md-2">
                 @Html.LabelFor(model => model.LOP, "Lớp: ", htmlAttributes: new { @class = "control-label" })
             </div>
-
             <div class="col-md-2">
-                <input type="text" name="LOP" id="LOP" class="form-control" value=@ViewBag.student.LOP required />
+                <input type="text" name="LOP" id="LOP" class="form-control" required />
                 @*@Html.EditorFor(model => model.LOP, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.LOP, "", new { @class = "text-danger" })
             </div>
@@ -81,23 +72,17 @@
 
         <div class="row mb-3">
             <div class="col-md-2">
-                @Html.LabelFor(model => model.KHOA, "Khóa: ", htmlAttributes: new { @class = "control-label" })
+                @Html.LabelFor(model => model.KHOA, "Khóa: " ,htmlAttributes: new { @class = "control-label" })
             </div>
             <div class="col-md-2">
-                <input type="number" name="KHOA" id="KHOA" class="form-control" value="@ViewBag.student.KHOA" required />
+                <input type="number" name="KHOA" id="KHOA" class="form-control" required />
                 @Html.ValidationMessageFor(model => model.KHOA, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-8">
-                <input type="submit" value="Cập nhật" class="btn btn-primary fw-bold" />
-            </div>
-            <div class="col-md-4">
-                @if (ViewBag.response != null)
-                {
-                    <div class="text-uppercase fw-bold @(ViewBag.response == "Error" ? "text-danger" : "text-success")">@ViewBag.response</div>
-                }
+                <input type="submit" value="Create" class="btn btn-primary fw-bold" />
             </div>
         </div>
     </div>

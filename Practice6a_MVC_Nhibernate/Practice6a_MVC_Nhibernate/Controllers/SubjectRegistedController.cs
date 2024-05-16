@@ -34,42 +34,61 @@ namespace Practice6a_MVC_Nhibernate.Controllers
         [ChildActionOnly]
         public ActionResult ResultSubjectRegisted(int Id)
         {
+            
+            ViewBag.Id = Id;    
             DataTable resultStudent = _registedService.GetResultSubjectRegisted(Id);
             ViewBag.resultStudent = resultStudent;
             return PartialView();
         }
 
+        [HttpPost]
+        public ActionResult ResultSubjectRegisted(int Id, string MAMH, int SOLANHOC)
+        {
+            ViewBag.Id = Id;
+
+            var subjectRegisted = new SubjectRegisted { MAMH = MAMH, MSSV = Id, SOLANHOC = SOLANHOC };
+            ViewBag.response = _registedService.DeleteRegisted(subjectRegisted);
+            DataTable resultStudent = _registedService.GetResultSubjectRegisted(Id);
+            ViewBag.resultStudent = resultStudent;
+            return PartialView();
+
+
+        }
+
         public ActionResult InsertScore(int Id)
         {
+
             ViewBag.IdStudent = Id;
             return View();
         }
 
+        [ChildActionOnly]
+        [HttpGet]
         public ActionResult PostScore(int Id)
         {
             ViewBag.IdStudent = Id;
-
+            TempData["success"] = null;
             IList<SubjectRegisted> subjectRegisted = _registedService.GetSubjectRegisted(Id);
             ViewBag.subjectRegisted = subjectRegisted;
             ViewBag.response = null;
             return PartialView();
+
         }
         [HttpPost]
         public ActionResult PostScore(SubjectRegisted subjectRegisted)
         {
             string response = _registedService.InsertDataScore(subjectRegisted);
-
+            TempData["success"] = response;
             ViewBag.IdStudent = subjectRegisted.MSSV;
             IList<SubjectRegisted> subjectRegisteds = _registedService.GetSubjectRegisted(subjectRegisted.MSSV);
             ViewBag.subjectRegisted = subjectRegisteds;
-            ViewBag.response = response;
             return PartialView();
         }
 
 
         public ActionResult SubjectRegister(int Id)
         {
-            ViewBag.IdStudent = Id;
+            ViewBag.Id = Id;
 
             IList<Subject> subject = _subjectService.GetUnregistered(Id);
             ViewBag.subject = subject;
@@ -79,23 +98,37 @@ namespace Practice6a_MVC_Nhibernate.Controllers
 
 
         [HttpPost]
-        public ActionResult SubjectRegister(SubjectRegisted subjectRegister)
+        public ActionResult SubjectRegister(int Id, FormCollection form)
         {
-            ViewBag.IdStudent = subjectRegister.MSSV;
-            IList<SubjectRegisted> listSubjectRegisteds = _registedService.GetSubjectRegisted(subjectRegister.MSSV);
-            IList<SubjectRegisted> filteredList = listSubjectRegisteds.Where(model => model.MAMH == subjectRegister.MAMH).ToList();
+            ViewBag.Id = Id;
+            var selectedSubjects = form.GetValues("selectedSubjects");
 
-            if (filteredList.Count > 0)
+            IList<SubjectRegisted> listSubjectRegisteds = _registedService.GetSubjectRegisted(Id);
+            string response = null;
+            foreach (string maMH  in selectedSubjects)
             {
-                subjectRegister.SOLANHOC = filteredList[0].SOLANHOC+1;
+                SubjectRegisted subjectRegister = new SubjectRegisted();
+                subjectRegister.MAMH = maMH;
+                subjectRegister.MSSV = Id;
+                SubjectRegisted subjectRegisted = listSubjectRegisteds.SingleOrDefault(x => x.MAMH == maMH);
+                if(subjectRegisted != null)
+                {
+                    subjectRegister.SOLANHOC = subjectRegisted.SOLANHOC+1;
+                }
+                else
+                {
+                    subjectRegister.SOLANHOC = 1;
+                }
+                response = _registedService.SubjectRegister(subjectRegister);
             }
 
-            IList<Subject> subject = _subjectService.GetUnregistered(subjectRegister.MSSV);
+            IList<Subject> subject = _subjectService.GetUnregistered(Id);
             ViewBag.subject = subject;
+            ViewBag.IdStudent = Id;
 
-            string response = _registedService.SubjectRegister(subjectRegister);
-            ViewBag.response = response;
-            return View();
+            TempData["success"] = response;
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

@@ -34,9 +34,7 @@ namespace Practice6a_MVC_Nhibernate.Controllers
         // GET: Student
         public ActionResult Index()
         {
-
             IList<Student> students = _studentService.GetAll();
-
             return View(students);
         }
     }

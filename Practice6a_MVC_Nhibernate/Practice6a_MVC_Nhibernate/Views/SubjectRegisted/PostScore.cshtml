@@ -1,6 +1,6 @@
 ﻿@model Practice6a_MVC_Nhibernate.Models.SubjectRegisted
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("PostScore", "SubjectRegisted", FormMethod.Post, new { id= "submitScore" }))
 {
     @Html.AntiForgeryToken()
 
@@ -52,7 +52,7 @@
 
     <div class="row">
         <div class="col-md-offset-2 col-md-8">
-            <input type="submit" value="Nhập điểm" class="btn btn-primary fw-bold" />
+            <input type="submit" value="Nhập điểm" class="btn btn-primary fw-bold" id="submitScore" name="submitScore"/>
         </div>
         <div class="col-md-4">
             @if (ViewBag.response != null)
@@ -64,11 +64,11 @@
 </div>
 }
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
 
 <script>
-
     var subjectRegisted = @Html.Raw(Json.Encode(ViewBag.subjectRegisted));
+    if (subjectRegisted.length == 0) { $('#submitScore').hide(); }
 
     function checkScore(subjectRegisted, maMH) {
 
@@ -81,7 +81,7 @@
             $('#editDTP').show();
             $('#DTP').val(matchedSubjects[0].DTP);
             $('#DTP').prop('readonly', true);
-
+         
         }
         else {
             $('#editDTP').hide();
@@ -93,7 +93,6 @@
             $('#editDQT').show();
             $('#DQT').val(matchedSubjects[0].DQT);
             $('#DQT').prop('readonly', true);
-            debugger
         }
         else {
             $('#editDQT').hide();
@@ -101,20 +100,36 @@
             $('#DQT').prop('readonly', false);
         }
     }
-
+    
     $('#editDTP').click(function () {
         $('#DTP').prop('readonly', false);
     })
     $('#editDQT').click(function () {
         $('#DQT').prop('readonly', false);
     })
-
-
-    checkScore(subjectRegisted, $('#MAMH').val());
     $(document).ready(function () {
-        // Khi giá trị của dropdown thay đổi
-        $('#MAMH').change(function () {
-            checkScore(subjectRegisted, $('#MAMH').val());
+        checkScore(subjectRegisted, $('#MAMH').val());
+    })
+    
+
+    $('#MAMH').change(function () {
+        checkScore(subjectRegisted, $('#MAMH').val());
+    });
+
+    $(document).ready(function () {
+
+        $("#submitScore").on('submit', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: $(this).prop('method'),
+                url: $(this).prop('action'),
+                data: $(this).serialize()
+            }).done(function () {
+                window.location.replace("/Home/Index");
+            });
         });
     });
+        
+
+
 </script>

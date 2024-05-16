@@ -16,5 +16,7 @@ namespace Practice6a_MVC_Nhibernate.Interfaces.IData
         IList<SubjectRegisted> GetSubjectRegisted(int Id);
 
         string SubjectRegister(SubjectRegisted subjectRegisted);
+
+        string DeleteRegisted(SubjectRegisted subjectRegisted);
     }
 }

@@ -45,8 +45,7 @@ namespace Practice6a_MVC_Nhibernate.Data
             DataTable dataTable = new DataTable();
             using (var session = _sefact.OpenSession())
             {
-                string sqlQuery = "Select SOLANHOC, DANGKYMH.MAMH,TENMH, DTP, DQT, RATEDQT, RATEDTP, ROUND((DTP*RATEDTP+DQT*RATEDQT),2) AS DTK," +
-                                  " CASE WHEN ROUND((DTP*RATEDTP+DQT*RATEDQT),2) > 4.0 THEN 'Pass' ELSE 'Fail' END AS KETQUA" +
+                string sqlQuery = "Select SOLANHOC, DANGKYMH.MAMH, TENMH, DTP, DQT, RATEDQT, RATEDTP, DTK, KETQUA" +
                                   " FROM DANGKYMH INNER JOIN MONHOC ON MONHOC.MAMH=DANGKYMH.MAMH" +
                                   $" WHERE MSSV={id}" +
                                   " ORDER BY SOLANHOC ASC";
@@ -129,17 +128,40 @@ namespace Practice6a_MVC_Nhibernate.Data
                 {
                     try
                     {
-                        session.Save(subjectRegisted);
+                        session.SaveOrUpdate(subjectRegisted);
                         tx.Commit();
                     }
                     catch (Exception ex)
                     {
+                        tx.Rollback();
                         return ex.ToString();
 
                     }
                 }
             }
             return "Đăng ký môn thành công";
+        }
+
+        public string DeleteRegisted(SubjectRegisted subjectRegisted)
+        {
+            using (var session = _sefact.OpenSession())
+            {
+                using (var tx = session.BeginTransaction())
+                {
+                    try
+                    {
+                        session.Delete(subjectRegisted);
+                        tx.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        tx.Rollback();
+                        return ex.ToString();
+
+                    }
+                }
+            }
+            return "Xoá thành công";
         }
     }
 }

@@ -49,5 +49,10 @@ namespace Practice6a_MVC_Nhibernate.Services
         {
             return _registedData.SubjectRegister(subjectRegisted);
         }
+
+        public string DeleteRegisted(SubjectRegisted subjectRegisted)
+        {
+            return _registedData.DeleteRegisted(subjectRegisted);
+        }
     }
 }

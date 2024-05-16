@@ -1,4 +1,5 @@
 ﻿using Castle.MicroKernel.Registration;
+using NHibernate.Loader.Custom;
 using Practice6a_MVC_Nhibernate.App_Start;
 using Practice6a_MVC_Nhibernate.Interfaces.IData;
 using Practice6a_MVC_Nhibernate.Interfaces.IServices;
@@ -21,7 +22,7 @@ namespace Practice6a_MVC_Nhibernate.Controllers
                 _studentService = container.Container.Resolve<IStudentService>();
             }
         }
-        public ActionResult Details(int Id)
+        public ActionResult Result(int Id)
         {
             ViewBag.Id = Id;
             return View();
@@ -35,5 +36,36 @@ namespace Practice6a_MVC_Nhibernate.Controllers
             return PartialView();
         }
 
+        public ActionResult Details(int Id)
+        {
+            Student student = _studentService.GetByID(Id);
+            ViewBag.student = student;
+            ViewBag.response = null;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Details(Student student)
+        {
+            string response = _studentService.SaveStudent(student);
+            TempData["success"] = response;
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public ActionResult AddStudent()
+        {
+            return View(); 
+        }
+
+        [HttpPost]
+        public ActionResult AddStudent(Student student)
+        {
+            string response = _studentService.SaveStudent(student);
+            TempData["success"] = response;
+            
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
