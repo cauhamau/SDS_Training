@@ -80,7 +80,7 @@
     var Id = @Html.Raw(Json.Encode(ViewBag.Id));
     var response = @Html.Raw(Json.Encode(ViewBag.response));
     $(document).ready(function () {
-        if (response == "Xoá thành công") {
+        if (response == "success") {
             toastr.options.timeOut = 2000; // 2s
             toastr.success("Xoá thành công");
         }

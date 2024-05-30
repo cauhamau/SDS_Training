@@ -1,0 +1,63 @@
+﻿@model Practice6a_MVC_Nhibernate.Models.Student
+
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+@Styles.Render("~/Content/css")
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+
+
+
+<body style="background-color: #E4E7EB">
+    <div class="login-wrapper">
+        <div class="login-container">
+            <div class="login-form">
+                <div id="loginlogo" class="login-logo">
+                    <img style="max-height:100px" id="logoimage" src="~/Data/login.png" class="img-fluid" alt="Trường ĐH CNTT - Website môn học">
+
+                    <h1 class="login-heading sr-only"></h1>
+                </div>
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-group">
+                        <input type="text" name="username" id="username" class="form-control form-control-lg mb-3" placeholder="Tên tài khoản" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password" id="password" class="form-control form-control-lg mb-3" placeholder="Mật khẩu" required />
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Đăng nhập" class="btn btn-primary fw-bold" />
+                        </div>
+                    </div>
+
+                }
+                @Html.ActionLink("Đăng ký", "Login", "Home")
+            </div>
+        </div>
+    </div>
+
+</body>
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+<script>
+
+    $(document).ready(function () {
+        var warning = @Html.Raw(Json.Encode(TempData["warning"]));
+        if (warning != null) {
+            toastr.options.timeOut = 2000; // 2s
+            toastr.warning(warning);
+        }
+
+        if (history.pushState) {
+            var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            history.pushState({ path: newUrl }, '', newUrl);
+        }
+    });
+</script>

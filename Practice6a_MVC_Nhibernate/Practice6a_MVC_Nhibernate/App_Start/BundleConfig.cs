@@ -23,6 +23,7 @@ namespace Practice6a_MVC_Nhibernate
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                      "~/Content/login.css",
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
         }

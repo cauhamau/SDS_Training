@@ -3,7 +3,6 @@
     ViewBag.Title = "Index";
 }
 <link rel="stylesheet" href="~/Content/Site.css">
-
 <h2 class="text-center">Danh sách sinh viên</h2>
 <table id="myTable" class="display">
     <thead>
@@ -70,15 +69,19 @@
             },
         });
 
-        var message = @Html.Raw(Json.Encode(TempData["success"]));
-        if (message == null) {
-            toastr.options.timeOut = 2000; // 2s
-            toastr.info('Page Loaded!');
-        }
-        else {
-            toastr.options.timeOut = 2000; // 2s
-            toastr.info(message);
-        }
+        $(window).ready(function () {
+            var success = @Html.Raw(Json.Encode(TempData["success"]));
+            var warning = @Html.Raw(Json.Encode(TempData["warning"]));
+            if (success != null) {
+                toastr.options.timeOut = 2000; // 2s
+                toastr.success(success);    
+            }
+            if (warning != null) {
+                toastr.options.timeOut = 2000; // 2s
+                toastr.warning(warning);
+            }
+        })
+
     });
 </script>
 

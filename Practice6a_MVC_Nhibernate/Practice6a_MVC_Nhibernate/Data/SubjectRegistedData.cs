@@ -116,7 +116,7 @@ namespace Practice6a_MVC_Nhibernate.Data
                     }
                 }
             }
-            return "Nhập điểm thành công";
+            return "success";
         }
 
 
@@ -139,7 +139,7 @@ namespace Practice6a_MVC_Nhibernate.Data
                     }
                 }
             }
-            return "Đăng ký môn thành công";
+            return "success";
         }
 
         public string DeleteRegisted(SubjectRegisted subjectRegisted)
@@ -161,7 +161,7 @@ namespace Practice6a_MVC_Nhibernate.Data
                     }
                 }
             }
-            return "Xoá thành công";
+            return "success";
         }
     }
 }

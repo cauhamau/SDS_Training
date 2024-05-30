@@ -18,6 +18,11 @@ namespace Practice6a_MVC_Nhibernate
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+            routes.MapRoute(
+                name: "Login",
+                url: "Home/Login",
+                defaults: new { controller = "Home", action = "Login" }
+            );
         }
     }
 }

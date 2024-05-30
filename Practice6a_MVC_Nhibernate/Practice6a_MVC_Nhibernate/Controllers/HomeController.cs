@@ -13,29 +13,101 @@ using System.Data;
 using System.Web.UI.WebControls;
 using Practice6a_MVC_Nhibernate.Data;
 using Practice6a_MVC_Nhibernate.App_Start;
+using System.Web.Security;
 namespace Practice6a_MVC_Nhibernate.Controllers
 {
     public class HomeController : Controller
     {
         //IWindsorInstaller _installer;
         private readonly IStudentService _studentService;
-        private readonly ISubjectData _subjectData;
-        private readonly ISubjectRegistedService _registedService;
+        private readonly IUserService _userService;
         public HomeController()
         {
             using (var container = DependencyContainer.Bootstrap())
             {
                 _studentService = container.Container.Resolve<IStudentService>();
-                _subjectData = container.Container.Resolve<ISubjectData>();
-                _registedService = container.Container.Resolve<ISubjectRegistedService>();
+                _userService = container.Container.Resolve<IUserService>();
             }
         }
 
         // GET: Student
         public ActionResult Index()
         {
-            IList<Student> students = _studentService.GetAll();
-            return View(students);
+            User user = (User)Session["user"];
+            var a = user;
+            
+            if (Session["user"]==null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            else if (user.ROLE=="admin")
+            {
+                IList<Student> student = _studentService.GetAll();
+                return View(student);
+            }
+            else if (user.ROLE=="student")
+            {   
+                return RedirectToAction("Details", "Student", new { Id = user.USERNAME });
+            }
+            else if (user.ROLE=="teacher")
+            {
+                IList<Student> student = _studentService.GetAll();
+                return View(student);
+            }
+            return RedirectToAction("Login", "Home");
+        }
+        
+        public ActionResult Login(string returnUrl)
+        {
+            if (!string.IsNullOrEmpty(returnUrl))
+            {
+                // Store the returnUrl in ViewBag or ViewData to access it in the view
+                ViewBag.ReturnUrl = returnUrl;
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Login(string username, string password)
+        {
+            if (!(string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))) {
+                User user = _userService.CheckAccountLogIn(username, password);
+                if (user == null)
+                {
+                    TempData["warning"] = "Tài khoản hoặc mật khẩu không chính xác";
+                    return View();
+                }
+
+                FormsAuthentication.SetAuthCookie(username, false);
+                Session["user"] = user;
+
+                var authTicket = new FormsAuthenticationTicket(
+                    1,                      // Version
+                    username,               // User Name
+                    DateTime.Now,           // Issue Date
+                    DateTime.Now.AddMinutes(15), // Expiration
+                    false,                  // Is Persistent
+                    user.ROLE                 // User Data (Roles)
+                );
+
+                // Mã hóa ticket
+                string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
+
+                // Tạo cookie chứa ticket đã mã hóa
+                var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+                HttpContext.Response.Cookies.Add(authCookie);
+
+
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+
+        public ActionResult Logout()
+        {
+            Session.Remove("user");
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login", "Home");
         }
     }
 }

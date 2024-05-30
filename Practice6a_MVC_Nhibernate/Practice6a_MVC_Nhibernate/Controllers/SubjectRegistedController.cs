@@ -59,6 +59,12 @@ namespace Practice6a_MVC_Nhibernate.Controllers
         {
 
             ViewBag.IdStudent = Id;
+            IList<SubjectRegisted> subjectRegisted = _registedService.GetSubjectRegisted(Id);
+            if (subjectRegisted.Count == 0)
+            {
+                TempData["warning"] = "Sinh viên chưa đăng ký môn học";
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -67,7 +73,6 @@ namespace Practice6a_MVC_Nhibernate.Controllers
         public ActionResult PostScore(int Id)
         {
             ViewBag.IdStudent = Id;
-            TempData["success"] = null;
             IList<SubjectRegisted> subjectRegisted = _registedService.GetSubjectRegisted(Id);
             ViewBag.subjectRegisted = subjectRegisted;
             ViewBag.response = null;
@@ -78,7 +83,15 @@ namespace Practice6a_MVC_Nhibernate.Controllers
         public ActionResult PostScore(SubjectRegisted subjectRegisted)
         {
             string response = _registedService.InsertDataScore(subjectRegisted);
-            TempData["success"] = response;
+
+            if (response == "success")
+            {
+                TempData["success"] = "Nhập điểm thành công";
+            }    
+            else
+            {
+                TempData["warning"] = response;
+            }
             ViewBag.IdStudent = subjectRegisted.MSSV;
             IList<SubjectRegisted> subjectRegisteds = _registedService.GetSubjectRegisted(subjectRegisted.MSSV);
             ViewBag.subjectRegisted = subjectRegisteds;
@@ -92,7 +105,6 @@ namespace Practice6a_MVC_Nhibernate.Controllers
 
             IList<Subject> subject = _subjectService.GetUnregistered(Id);
             ViewBag.subject = subject;
-            ViewBag.response = null;
             return View();
         }
 
@@ -120,14 +132,13 @@ namespace Practice6a_MVC_Nhibernate.Controllers
                     subjectRegister.SOLANHOC = 1;
                 }
                 response = _registedService.SubjectRegister(subjectRegister);
+                if (response != "success")
+                {
+                    TempData["warning"] = response;
+                    return RedirectToAction("Index", "Home");
+                }
             }
-
-            IList<Subject> subject = _subjectService.GetUnregistered(Id);
-            ViewBag.subject = subject;
-            ViewBag.IdStudent = Id;
-
-            TempData["success"] = response;
-
+            TempData["success"] = "Đăng ký môn học thành công";
             return RedirectToAction("Index", "Home");
         }
     }

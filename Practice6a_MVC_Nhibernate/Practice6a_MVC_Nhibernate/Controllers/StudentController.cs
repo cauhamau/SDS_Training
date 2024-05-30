@@ -36,6 +36,7 @@ namespace Practice6a_MVC_Nhibernate.Controllers
             return PartialView();
         }
 
+
         public ActionResult Details(int Id)
         {
             Student student = _studentService.GetByID(Id);
@@ -56,6 +57,11 @@ namespace Practice6a_MVC_Nhibernate.Controllers
         [HttpGet]
         public ActionResult AddStudent()
         {
+            if (Session["user"].ToString() != "admin")
+            {
+                TempData["warning"] = "Bạn không có quyền truy cập trang này.";
+                return RedirectToAction("Index", "Home");
+            }
             return View(); 
         }
 

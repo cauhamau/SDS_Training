@@ -25,7 +25,7 @@ namespace Practice6a_MVC_Nhibernate.Data
         {
             NHibernate.Cfg.Configuration cfg = new NHibernate.Cfg.Configuration();
             cfg.DataBaseIntegration(x => {
-                x.ConnectionString = "data source=.;initial catalog=QLSV;integrated security=true;";
+                x.ConnectionString = connectionString;
                 x.Driver<SqlClientDriver>();
                 x.Dialect<MsSql2008Dialect>();
             });

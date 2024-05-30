@@ -30,8 +30,12 @@
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Thêm sinh viên", "AddStudent", "Student", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li id="AddStudent">@Html.ActionLink("Thêm sinh viên", "AddStudent", "Student", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li id="AddStudent">@Html.ActionLink("Đăng ký môn học", "AddStudent", "Student", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
+            </div>
+            <div class="text-end navbar-brand">
+                @Html.ActionLink("Đăng xuất", "Logout", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
         </div>
     </nav>
@@ -53,4 +57,6 @@
 
 </html>
 
+<script>
 
+</script>

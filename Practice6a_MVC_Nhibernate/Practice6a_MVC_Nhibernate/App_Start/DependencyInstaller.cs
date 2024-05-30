@@ -21,9 +21,11 @@ namespace Practice6a_MVC_Nhibernate.App_Start
             container.Register(Component.For<IStudentService>().ImplementedBy<StudentService>(),
                        Component.For<ISubjectRegistedService>().ImplementedBy<SubjectRegistedService>(),
                        Component.For<ISubjectService>().ImplementedBy<SubjectService>(),
+                       Component.For<IUserService>().ImplementedBy<UserService>(),
                        Component.For<ISubjectRegistedData>().ImplementedBy<SubjectRegistedData>().DependsOn(Dependency.OnValue("connectionString", _connectionString)),
                        Component.For<IStudentData>().ImplementedBy<StudentData>().DependsOn(Dependency.OnValue("connectionString", _connectionString)), //"data source=.;initial catalog=QLSV;integrated security=true;")),
-                       Component.For<ISubjectData>().ImplementedBy<SubjectData>().DependsOn(Dependency.OnValue("connectionString", _connectionString))); //"data source=.;initial catalog=QLSV;integrated security=true;")));
+                       Component.For<ISubjectData>().ImplementedBy<SubjectData>().DependsOn(Dependency.OnValue("connectionString", _connectionString)),
+                       Component.For<IUserData>().ImplementedBy<UserData>().DependsOn(Dependency.OnValue("connectionString", _connectionString)));//"data source=.;initial catalog=QLSV;integrated security=true;")));
         }
     }
 }
