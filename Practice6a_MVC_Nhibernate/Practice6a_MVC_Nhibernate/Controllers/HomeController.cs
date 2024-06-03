@@ -21,12 +21,14 @@ namespace Practice6a_MVC_Nhibernate.Controllers
         //IWindsorInstaller _installer;
         private readonly IStudentService _studentService;
         private readonly IUserService _userService;
+        private readonly IEncryptService _encryptService;
         public HomeController()
         {
             using (var container = DependencyContainer.Bootstrap())
             {
                 _studentService = container.Container.Resolve<IStudentService>();
                 _userService = container.Container.Resolve<IUserService>();
+                _encryptService = container.Container.Resolve<IEncryptService>();
             }
         }
 
@@ -71,7 +73,8 @@ namespace Practice6a_MVC_Nhibernate.Controllers
         public ActionResult Login(string username, string password)
         {
             if (!(string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))) {
-                User user = _userService.CheckAccountLogIn(username, password);
+                byte[] password_en = _encryptService.HashPasswordSHA256(password);
+                User user = _userService.CheckAccountLogIn(username, password_en);
                 if (user == null)
                 {
                     TempData["warning"] = "Tài khoản hoặc mật khẩu không chính xác";

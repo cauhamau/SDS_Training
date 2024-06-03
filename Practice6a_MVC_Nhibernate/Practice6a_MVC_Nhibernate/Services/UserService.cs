@@ -27,11 +27,15 @@ namespace Practice6a_MVC_Nhibernate.Services
             return _userData.GetByID(key);
         }
 
-        public User CheckAccountLogIn(string username, string password)
+        public User CheckAccountLogIn(string username, byte[] password)
         {
             IList<User> users = _userData.GetAll();
-            User user = users.FirstOrDefault(u => u.USERNAME==username && u.PASSWORD==password);
-            if (user != null)
+            User user = users.FirstOrDefault(u => u.USERNAME==username);
+            if (user==null)
+            {
+                return null;
+            }
+            else if(user.PASSWORD.SequenceEqual(password))
             {
                 return user;
             }
