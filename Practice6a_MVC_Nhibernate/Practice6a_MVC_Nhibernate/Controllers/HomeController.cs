@@ -18,6 +18,7 @@ namespace Practice6a_MVC_Nhibernate.Controllers
 {
     public class HomeController : Controller
     {
+        private static readonly log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         //IWindsorInstaller _installer;
         private readonly IStudentService _studentService;
         private readonly IUserService _userService;
@@ -35,27 +36,23 @@ namespace Practice6a_MVC_Nhibernate.Controllers
         // GET: Student
         public ActionResult Index()
         {
-            User user = (User)Session["user"];
-            var a = user;
             
-            if (Session["user"]==null)
-            {
-                return RedirectToAction("Login", "Home");
-            }
-            else if (user.ROLE=="admin")
+            
+            if (HttpContext.User.IsInRole("admin"))
             {
                 IList<Student> student = _studentService.GetAll();
                 return View(student);
             }
-            else if (user.ROLE=="student")
+            else if (HttpContext.User.IsInRole("student"))
             {   
-                return RedirectToAction("Details", "Student", new { Id = user.USERNAME });
+                return RedirectToAction("Details", "Student", new { id = HttpContext.User.Identity.Name });
             }
-            else if (user.ROLE=="teacher")
+            else if (HttpContext.User.IsInRole("teacher"))
             {
                 IList<Student> student = _studentService.GetAll();
                 return View(student);
             }
+
             return RedirectToAction("Login", "Home");
         }
         
@@ -72,9 +69,12 @@ namespace Practice6a_MVC_Nhibernate.Controllers
         [HttpPost]
         public ActionResult Login(string username, string password)
         {
+            
             if (!(string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))) {
-                byte[] password_en = _encryptService.HashPasswordSHA256(password);
-                User user = _userService.CheckAccountLogIn(username, password_en);
+                username = username.Trim();
+                //password = password.Trim();
+                byte[] password_encrypt = _encryptService.HashPasswordSHA256(password);
+                User user = _userService.CheckAccountLogIn(username, password_encrypt);
                 if (user == null)
                 {
                     TempData["warning"] = "Tài khoản hoặc mật khẩu không chính xác";
@@ -82,7 +82,6 @@ namespace Practice6a_MVC_Nhibernate.Controllers
                 }
 
                 FormsAuthentication.SetAuthCookie(username, false);
-                Session["user"] = user;
 
                 var authTicket = new FormsAuthenticationTicket(
                     1,                      // Version
@@ -100,15 +99,40 @@ namespace Practice6a_MVC_Nhibernate.Controllers
                 var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
                 HttpContext.Response.Cookies.Add(authCookie);
 
-
+                _log.Info("Log in with user: " + user.USERNAME);
                 return RedirectToAction("Index", "Home");
             }
             return View();
         }
 
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(string username, string oldPassword, string newPassword) 
+        {
+            username = username.Trim();
+            byte[] oldPassword_encrypt = _encryptService.HashPasswordSHA256(oldPassword);
+            User user = _userService.CheckAccountLogIn(username, oldPassword_encrypt);
+            if (user != null)
+            {
+                byte[] newPassword_encrypt = _encryptService.HashPasswordSHA256(newPassword);
+                user.PASSWORD = newPassword_encrypt;
+                TempData["success"] = "Đổi mật khẩu thành công";
+                _log.Info(HttpContext.User.Identity.Name + " đổi mật khẩu thành công");
+                return RedirectToAction("Login", "Home");
+            }
+            else
+            {
+                TempData["warning"] = "Tài khoản hoặc mật khẩu không chính xác";
+                return View();
+            }
+
+        }
         public ActionResult Logout()
         {
-            Session.Remove("user");
             FormsAuthentication.SignOut();
             return RedirectToAction("Login", "Home");
         }

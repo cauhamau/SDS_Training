@@ -1,4 +1,5 @@
 ﻿using Practice6a_MVC_Nhibernate.App_Start;
+using Practice6a_MVC_Nhibernate.Filters;
 using Practice6a_MVC_Nhibernate.Interfaces.IData;
 using Practice6a_MVC_Nhibernate.Interfaces.IServices;
 using Practice6a_MVC_Nhibernate.Models;
@@ -23,6 +24,7 @@ namespace Practice6a_MVC_Nhibernate.Controllers
         //}
         private readonly ISubjectRegistedService _registedService;
         private readonly ISubjectService _subjectService;
+        private static readonly log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public SubjectRegistedController()
         {
             using (var container = DependencyContainer.Bootstrap())
@@ -32,34 +34,34 @@ namespace Practice6a_MVC_Nhibernate.Controllers
             }
         }
         [ChildActionOnly]
-        public ActionResult ResultSubjectRegisted(int Id)
+        public ActionResult ResultSubjectRegisted(int id)
         {
             
-            ViewBag.Id = Id;    
-            DataTable resultStudent = _registedService.GetResultSubjectRegisted(Id);
+            ViewBag.id = id;    
+            DataTable resultStudent = _registedService.GetResultSubjectRegisted(id);
             ViewBag.resultStudent = resultStudent;
             return PartialView();
         }
 
         [HttpPost]
-        public ActionResult ResultSubjectRegisted(int Id, string MAMH, int SOLANHOC)
+        public ActionResult ResultSubjectRegisted(int id, string MAMH, int SOLANHOC)
         {
-            ViewBag.Id = Id;
+            ViewBag.id = id;
 
-            var subjectRegisted = new SubjectRegisted { MAMH = MAMH, MSSV = Id, SOLANHOC = SOLANHOC };
+            var subjectRegisted = new SubjectRegisted { MAMH = MAMH, MSSV = id, SOLANHOC = SOLANHOC };
             ViewBag.response = _registedService.DeleteRegisted(subjectRegisted);
-            DataTable resultStudent = _registedService.GetResultSubjectRegisted(Id);
+            DataTable resultStudent = _registedService.GetResultSubjectRegisted(id);
             ViewBag.resultStudent = resultStudent;
             return PartialView();
 
 
         }
 
-        public ActionResult InsertScore(int Id)
+        [CustomAuthorize("admin", "teacher")]
+        public ActionResult InsertScore(int id)
         {
-
-            ViewBag.IdStudent = Id;
-            IList<SubjectRegisted> subjectRegisted = _registedService.GetSubjectRegisted(Id);
+            ViewBag.idStudent = id;
+            IList<SubjectRegisted> subjectRegisted = _registedService.GetSubjectRegisted(id);
             if (subjectRegisted.Count == 0)
             {
                 TempData["warning"] = "Sinh viên chưa đăng ký môn học";
@@ -70,10 +72,10 @@ namespace Practice6a_MVC_Nhibernate.Controllers
 
         [ChildActionOnly]
         [HttpGet]
-        public ActionResult PostScore(int Id)
+        public ActionResult PostScore(int id)
         {
-            ViewBag.IdStudent = Id;
-            IList<SubjectRegisted> subjectRegisted = _registedService.GetSubjectRegisted(Id);
+            ViewBag.idStudent = id;
+            IList<SubjectRegisted> subjectRegisted = _registedService.GetSubjectRegisted(id);
             ViewBag.subjectRegisted = subjectRegisted;
             ViewBag.response = null;
             return PartialView();
@@ -86,42 +88,47 @@ namespace Practice6a_MVC_Nhibernate.Controllers
 
             if (response == "success")
             {
+                _log.Info("Nhập điểm thành công");
                 TempData["success"] = "Nhập điểm thành công";
             }    
             else
             {
                 TempData["warning"] = response;
             }
-            ViewBag.IdStudent = subjectRegisted.MSSV;
+            ViewBag.idStudent = subjectRegisted.MSSV;
             IList<SubjectRegisted> subjectRegisteds = _registedService.GetSubjectRegisted(subjectRegisted.MSSV);
             ViewBag.subjectRegisted = subjectRegisteds;
             return PartialView();
         }
 
-
-        public ActionResult SubjectRegister(int Id)
+        [CustomAuthorize("admin", "student")]
+        public ActionResult SubjectRegister(int id)
         {
-            ViewBag.Id = Id;
+            User user = (User)Session["user"];
 
-            IList<Subject> subject = _subjectService.GetUnregistered(Id);
+            ViewBag.id = id;
+
+            IList<Subject> subject = _subjectService.GetUnregistered(id);
             ViewBag.subject = subject;
             return View();
+
+
         }
 
 
         [HttpPost]
-        public ActionResult SubjectRegister(int Id, FormCollection form)
+        public ActionResult SubjectRegister(int id, FormCollection form)
         {
-            ViewBag.Id = Id;
+            ViewBag.id = id;
             var selectedSubjects = form.GetValues("selectedSubjects");
 
-            IList<SubjectRegisted> listSubjectRegisteds = _registedService.GetSubjectRegisted(Id);
+            IList<SubjectRegisted> listSubjectRegisteds = _registedService.GetSubjectRegisted(id);
             string response = null;
             foreach (string maMH  in selectedSubjects)
             {
                 SubjectRegisted subjectRegister = new SubjectRegisted();
                 subjectRegister.MAMH = maMH;
-                subjectRegister.MSSV = Id;
+                subjectRegister.MSSV = id;
                 SubjectRegisted subjectRegisted = listSubjectRegisteds.SingleOrDefault(x => x.MAMH == maMH);
                 if(subjectRegisted != null)
                 {
@@ -138,6 +145,7 @@ namespace Practice6a_MVC_Nhibernate.Controllers
                     return RedirectToAction("Index", "Home");
                 }
             }
+            _log.Info("Đăng ký môn học thành công");
             TempData["success"] = "Đăng ký môn học thành công";
             return RedirectToAction("Index", "Home");
         }

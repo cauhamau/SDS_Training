@@ -9,7 +9,7 @@ using System.Web;
 namespace Practice6a_MVC_Nhibernate.Services
 {
     public class EncryptService : IEncryptService
-    {
+    {   
         public byte[] HashPasswordSHA256(string password)
         {
             using (SHA256 sha256 = SHA256.Create())

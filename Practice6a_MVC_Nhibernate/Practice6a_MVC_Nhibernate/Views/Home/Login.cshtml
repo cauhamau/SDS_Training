@@ -1,6 +1,4 @@
-﻿@model Practice6a_MVC_Nhibernate.Models.Student
-
-@{
+﻿@{
     ViewBag.Title = "Login";
     Layout = null;
 }
@@ -34,9 +32,9 @@
                             <input type="submit" value="Đăng nhập" class="btn btn-primary fw-bold" />
                         </div>
                     </div>
-
                 }
-                @Html.ActionLink("Đăng ký", "Login", "Home")
+
+                @Html.ActionLink("Đổi mật khẩu", "ChangePassword", "Home")
             </div>
         </div>
     </div>
@@ -49,7 +47,12 @@
 <script>
 
     $(document).ready(function () {
+        var success = @Html.Raw(Json.Encode(TempData["success"]));
         var warning = @Html.Raw(Json.Encode(TempData["warning"]));
+        if (success != null) {
+            toastr.options.timeOut = 2000; // 2s
+            toastr.success(success);
+        }
         if (warning != null) {
             toastr.options.timeOut = 2000; // 2s
             toastr.warning(warning);

@@ -6,18 +6,18 @@
 <br />
 <br />
 @{
-    Html.RenderAction("InfoStudent", "Student", new { Id = ViewBag.IdStudent });
+    Html.RenderAction("InfoStudent", "Student", new { id = ViewBag.idStudent });
 }
 <br />
 
 
 
-@{Html.RenderAction("PostScore", "SubjectRegisted", new { Id = ViewBag.IdStudent }); }
+@{Html.RenderAction("PostScore", "SubjectRegisted", new { id = ViewBag.idStudent }); }
 
 
 @*<br />
 <br />
 @{
-    Html.RenderAction("ResultSubjectRegisted", "SubjectRegisted", new { Id = ViewBag.IdStudent });
+    Html.RenderAction("ResultSubjectRegisted", "SubjectRegisted", new { Id = ViewBag.idStudent });
 }*@
 

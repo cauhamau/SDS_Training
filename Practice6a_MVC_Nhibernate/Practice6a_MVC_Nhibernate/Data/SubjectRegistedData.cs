@@ -18,7 +18,7 @@ namespace Practice6a_MVC_Nhibernate.Data
     internal class SubjectRegistedData : ISubjectRegistedData
     {
         NHibernate.ISessionFactory _sefact;
-
+        private static readonly log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public SubjectRegistedData(string connectionString)
         {
             NHibernate.Cfg.Configuration cfg = new NHibernate.Cfg.Configuration();
@@ -72,7 +72,7 @@ namespace Practice6a_MVC_Nhibernate.Data
 
             return dataTable;
         }
-        public IList<SubjectRegisted> GetSubjectRegisted(int Id)
+        public IList<SubjectRegisted> GetSubjectRegisted(int id)
         {
             IList<SubjectRegisted> subjectRegisteds = new List<SubjectRegisted>();
             try
@@ -80,7 +80,7 @@ namespace Practice6a_MVC_Nhibernate.Data
                 using (var session = _sefact.OpenSession())
                 {
                     string query = " SELECT * FROM DANGKYMH dm" +
-                                    $" WHERE MSSV = {Id} AND NOT EXISTS (" +
+                                    $" WHERE MSSV = {id} AND NOT EXISTS (" +
                                     " SELECT 1" +
                                     " FROM DANGKYMH dm2" +
                                     " WHERE dm.MSSV = dm2.MSSV " +
@@ -94,7 +94,7 @@ namespace Practice6a_MVC_Nhibernate.Data
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _log.Error(ex);
                 return null;
             }
         }
@@ -111,7 +111,8 @@ namespace Practice6a_MVC_Nhibernate.Data
                     }
                     catch (Exception ex)
                     {
-                            return ex.ToString();
+                        _log.Error(ex);
+                        return ex.ToString();
 
                     }
                 }
@@ -133,6 +134,7 @@ namespace Practice6a_MVC_Nhibernate.Data
                     }
                     catch (Exception ex)
                     {
+                        _log.Error(ex);
                         tx.Rollback();
                         return ex.ToString();
 
@@ -155,6 +157,7 @@ namespace Practice6a_MVC_Nhibernate.Data
                     }
                     catch (Exception ex)
                     {
+                        _log.Error(ex);
                         tx.Rollback();
                         return ex.ToString();
 

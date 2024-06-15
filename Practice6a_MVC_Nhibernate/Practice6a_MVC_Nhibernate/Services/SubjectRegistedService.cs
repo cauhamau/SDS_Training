@@ -30,18 +30,18 @@ namespace Practice6a_MVC_Nhibernate.Services
             throw new NotImplementedException();
         }
 
-        public DataTable GetResultSubjectRegisted(int Id)
+        public DataTable GetResultSubjectRegisted(int id)
         {
-            return _registedData.GetResultSubjectRegisted(Id);
+            return _registedData.GetResultSubjectRegisted(id);
         }
 
         public string InsertDataScore(SubjectRegisted subjectRegisted)
         {
             return _registedData.InsertDataScore(subjectRegisted);
         }
-        public IList<SubjectRegisted> GetSubjectRegisted(int Id)
+        public IList<SubjectRegisted> GetSubjectRegisted(int id)
         {
-            return _registedData.GetSubjectRegisted(Id);
+            return _registedData.GetSubjectRegisted(id);
         }
 
 

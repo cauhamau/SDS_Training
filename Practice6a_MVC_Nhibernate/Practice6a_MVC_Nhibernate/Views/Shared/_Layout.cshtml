@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Practice6a_MVC_Nhibernate.Models
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -10,7 +11,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
 
-    
+
     <style>
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
@@ -30,13 +31,32 @@
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li id="AddStudent">@Html.ActionLink("Thêm sinh viên", "AddStudent", "Student", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li id="AddStudent">@Html.ActionLink("Đăng ký môn học", "AddStudent", "Student", new { area = "" }, new { @class = "nav-link" })</li>
+                    @if (Context.User.IsInRole("admin"))
+                    {
+                        <li id="AddStudent">@Html.ActionLink("Thêm sinh viên", "AddStudent", "Student", new { area = "" }, new { @class = "nav-link" })</li>
+                    }
                 </ul>
             </div>
             <div class="text-end navbar-brand">
                 @Html.ActionLink("Đăng xuất", "Logout", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
+
+            @if(Context.User.IsInRole("student"))
+            {
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Menu
+                </button>
+                <ul class="dropdown-menu">
+                    <li>@Html.ActionLink("Lý lịch", "Details", "Student", new { Id = Context.User.Identity.Name }, new { @class = "dropdown-item" })</li>
+                    <li>@Html.ActionLink("Kết quả học tập", "Result", "Student", new { Id = Context.User.Identity.Name }, new { @class = "dropdown-item" })</li>
+                    <li>@Html.ActionLink("Đăng ký môn học", "SubjectRegister", "SubjectRegisted", new { Id = Context.User.Identity.Name }, new { @class = "dropdown-item" })</li>
+                    @*<li>@Html.ActionLink("Nhập điểm", "InsertScore", "SubjectRegisted", new { Id = user.USERNAME }, new { @class = "dropdown-item" })</li>*@
+                </ul>
+            </div>
+            }
+
+
         </div>
     </nav>
     <div class="container body-content">
@@ -46,7 +66,7 @@
             <p>&copy; @DateTime.Now.Year - SDS Training</p>
         </footer>
     </div>
-
+    <script src="~/Scripts/popper.min.js"></script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
 
@@ -59,4 +79,16 @@
 
 <script>
 
+        $(window).ready(function () {
+            var success = @Html.Raw(Json.Encode(TempData["success"]));
+            var warning = @Html.Raw(Json.Encode(TempData["warning"]));
+            if (success != null) {
+                toastr.options.timeOut = 2000; // 2s
+                toastr.success(success);
+            }
+            if (warning != null) {
+                toastr.options.timeOut = 2000; // 2s
+                toastr.warning(warning);
+            }
+        })
 </script>

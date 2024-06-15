@@ -17,6 +17,7 @@ namespace Practice6a_MVC_Nhibernate
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            //log4net.Config.XmlConfigurator.Configure();
         }
         protected void Application_AuthenticateRequest(Object sender, EventArgs e)
         {

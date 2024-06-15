@@ -41,5 +41,9 @@ namespace Practice6a_MVC_Nhibernate.Services
             }
             return null;
         }
+        public string SaveUser(User user)
+        {
+            return _userData.SaveUser(user);
+        }
     }
 }

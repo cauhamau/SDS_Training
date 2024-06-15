@@ -23,10 +23,14 @@
                     @Html.DisplayFor(modelItem => item.HOTENSV)
                 </td>
                 <td class="text-center">
-                    @Html.ActionLink("Lý lịch", "Details", "Student", new { Id = item.MSSV }, null) |
-                    @Html.ActionLink("Kết quả học tập", "Result", "Student", new { Id = item.MSSV }, null) |
-                    @Html.ActionLink("Đăng ký môn học", "SubjectRegister", "SubjectRegisted", new { Id = item.MSSV }, null) |
-                    @Html.ActionLink("Nhập điểm", "InsertScore", "SubjectRegisted", new { Id = item.MSSV }, null)
+                    @Html.ActionLink("Lý lịch", "Details", "Student", new { id = item.MSSV }, null) |
+                    @Html.ActionLink("Kết quả học tập", "Result", "Student", new { id = item.MSSV }, null) |
+                    @Html.ActionLink("Nhập điểm", "InsertScore", "SubjectRegisted", new { id = item.MSSV }, null)
+                    @if (Context.User.IsInRole("admin"))
+                    {
+                        <text>| @Html.ActionLink("Đăng ký môn học", "SubjectRegister", "SubjectRegisted", new { id = item.MSSV }, null)</text>
+                    }
+
 
                 </td>
             </tr>
@@ -69,18 +73,6 @@
             },
         });
 
-        $(window).ready(function () {
-            var success = @Html.Raw(Json.Encode(TempData["success"]));
-            var warning = @Html.Raw(Json.Encode(TempData["warning"]));
-            if (success != null) {
-                toastr.options.timeOut = 2000; // 2s
-                toastr.success(success);    
-            }
-            if (warning != null) {
-                toastr.options.timeOut = 2000; // 2s
-                toastr.warning(warning);
-            }
-        })
 
     });
 </script>

@@ -13,7 +13,7 @@ namespace Practice6a_MVC_Nhibernate.Data
     public class UserData : IUserData
     {
         NHibernate.ISessionFactory _sefact;
-
+        private static readonly log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public UserData(string connectionString)
         {
             NHibernate.Cfg.Configuration cfg = new NHibernate.Cfg.Configuration();
@@ -37,7 +37,7 @@ namespace Practice6a_MVC_Nhibernate.Data
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    _log.Error(ex);
                     return null;
                 }
             }
@@ -55,11 +55,34 @@ namespace Practice6a_MVC_Nhibernate.Data
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    _log.Error(ex);
                     return null;
                 }
             }
             return user;
+        }
+
+        public string SaveUser(User user)
+        {
+
+            using (var session = _sefact.OpenSession())
+            {
+                using (var tx = session.BeginTransaction())
+                {
+                    try
+                    {
+                        session.SaveOrUpdate(user);
+                        tx.Commit();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        _log.Error(ex);
+                        return ex.ToString();
+                    }
+                }
+            }
+            return "Cập nhật thành công";
         }
     }
 }

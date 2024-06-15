@@ -13,7 +13,7 @@ namespace Practice6a_MVC_Nhibernate.Interfaces.IData
         DataTable GetResultSubjectRegisted(int id);
         string InsertDataScore(SubjectRegisted subjectRegisted);
 
-        IList<SubjectRegisted> GetSubjectRegisted(int Id);
+        IList<SubjectRegisted> GetSubjectRegisted(int id);
 
         string SubjectRegister(SubjectRegisted subjectRegisted);
 

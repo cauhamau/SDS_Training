@@ -27,9 +27,9 @@ namespace Practice6a_MVC_Nhibernate.Services
             throw new NotImplementedException();
         }
 
-        public IList<Subject> GetUnregistered(int Id)
+        public IList<Subject> GetUnregistered(int id)
         {
-            return _subjectData.GetUnregistered(Id);
+            return _subjectData.GetUnregistered(id);
         }
     }
 }

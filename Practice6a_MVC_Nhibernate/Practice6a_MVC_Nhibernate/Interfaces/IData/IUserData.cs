@@ -8,5 +8,6 @@ namespace Practice6a_MVC_Nhibernate.Interfaces.IData
 {
     internal interface IUserData : IBasicData<User>
     {
+        string SaveUser(User user);
     }
 }

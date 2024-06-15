@@ -5,19 +5,19 @@
     ViewBag.Title = "Chi Tiết Sinh Viên";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@Html.ActionLink("Trở về trang chủ", "Index", "Home")
+@*@Html.ActionLink("Trở về trang chủ", "Index", "Home")*@
 <br />
 <h2 class="text-center">Thông tin sinh viên</h2>
 <br />
 <div class="container">
 
     @{
-        Html.RenderAction("InfoStudent", "Student", new { Id = ViewBag.Id });
+        Html.RenderAction("InfoStudent", "Student", new { id = ViewBag.id });
     }
     <br />
     <hr />
     @{
-        Html.RenderAction("ResultSubjectRegisted", "SubjectRegisted", new { Id = ViewBag.Id });
+        Html.RenderAction("ResultSubjectRegisted", "SubjectRegisted", new { id = ViewBag.id });
     }
     
 </div>

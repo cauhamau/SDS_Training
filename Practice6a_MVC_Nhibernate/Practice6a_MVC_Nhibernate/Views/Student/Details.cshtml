@@ -4,7 +4,7 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@Html.ActionLink("Trở về trang chủ", "Index", "Home")
+@*@Html.ActionLink("Trở về trang chủ", "Index", "Home")*@
 <h2 class="text-center mb-4">Thông tin sinh viên</h2>
 
 @using (Html.BeginForm())
@@ -89,8 +89,7 @@
     <br />
 
     @{
-        var user = Session["user"] as User;
-        if (user.ROLE != "teacher")
+        if (!Context.User.IsInRole("teacher"))
         {
             <div class="form-group d-flex justify-content-center">
                 <input type="submit" id="submit" value="Cập nhật" class="btn btn-primary fw-bold" />
@@ -104,13 +103,3 @@
 }
 
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-
-<script>
-    var user = @Html.Raw(Json.Encode(Session["user"]));
-    $(document).ready(function () {
-        //$("#submit").val(user.ROLE);
-        if (user.ROLE == "teacher") {
-            $("#submit").remove();
-        }
-    })
-</script>

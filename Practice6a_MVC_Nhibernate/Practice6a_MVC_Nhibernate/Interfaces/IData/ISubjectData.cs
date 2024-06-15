@@ -10,6 +10,6 @@ namespace Practice6a_MVC_Nhibernate.Interfaces.IData
 {
     internal interface ISubjectData : IBasicData<Subject>
     {
-        IList<Subject> GetUnregistered(int Id);
+        IList<Subject> GetUnregistered(int id);
     }
 }

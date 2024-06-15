@@ -20,7 +20,7 @@ namespace Practice6a_MVC_Nhibernate.Data
     public class StudentData : IStudentData
     {
         NHibernate.ISessionFactory _sefact;
-
+        private static readonly log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public StudentData(string connectionString)
         {
             NHibernate.Cfg.Configuration cfg = new NHibernate.Cfg.Configuration();
@@ -44,7 +44,7 @@ namespace Practice6a_MVC_Nhibernate.Data
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    _log.Error(ex);
                     return null;
                 }
             }
@@ -64,7 +64,7 @@ namespace Practice6a_MVC_Nhibernate.Data
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    _log.Error(ex);
                     return null;
                 }
             }
@@ -86,11 +86,12 @@ namespace Practice6a_MVC_Nhibernate.Data
                     }
                     catch (Exception ex)
                     {
+                        _log.Error(ex);
                         return ex.ToString();
                     }
                 }
             }
-            return "Cập nhật sinh viên thành công";
+            return "success";
         }
 
     }

@@ -1,9 +1,8 @@
 ﻿@{
     ViewBag.Title = "ResultSubjectRegisted";
-    ViewBag.Id = ViewBag.Id;
     var resultStudent = ViewBag.resultStudent as System.Data.DataTable;
 }
-
+@using Practice6a_MVC_Nhibernate.Models
 
 <div class="text-uppercase fs-3 fw-bold">
     <span class="">Kết quả học tập </span>
@@ -58,17 +57,23 @@
                 <td> @row["KETQUA"]  </td>
 
             }
-
-            @using (Html.BeginForm())
-            {
-                <td style="display: none;">
-                    <input id="SOLANHOC" name="SOLANHOC" value=@row["SOLANHOC"] />
-                </td>
-                <td style="display: none;">
-                    <input id="MAMH" name="MAMH" value=@row["MAMH"] style="display: none;" />
-                </td>
-                <td><button type="submit" class="btn btn-danger delete-btn">Xóa</button></td>
+            @{
+                
+                if (Context.User.IsInRole("admin"))
+                {
+                    using (Html.BeginForm())
+                    {
+                        <td style="display: none;">
+                            <input id="SOLANHOC" name="SOLANHOC" value=@row["SOLANHOC"] />
+                        </td>
+                        <td style="display: none;">
+                            <input id="MAMH" name="MAMH" value=@row["MAMH"] style="display: none;" />
+                        </td>
+                        <td><button type="submit" class="btn btn-danger delete-btn">Xóa</button></td>
+                    }
+                }
             }
+
         </tr>
 
     }
@@ -77,7 +82,7 @@
 
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script>
-    var Id = @Html.Raw(Json.Encode(ViewBag.Id));
+    //var id = @Html.Raw(Json.Encode(ViewBag.id));
     var response = @Html.Raw(Json.Encode(ViewBag.response));
     $(document).ready(function () {
         if (response == "success") {

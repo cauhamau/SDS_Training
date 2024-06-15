@@ -2,11 +2,11 @@
 @{
     ViewBag.Title = "SubjectRegister";
 }
-@Html.ActionLink("Trở về trang chủ", "Index", "Home")
+@*@Html.ActionLink("Trở về trang chủ", "Index", "Home")*@
 <br />
 <br />
 @{
-    Html.RenderAction("InfoStudent", "Student", new { Id = ViewBag.Id });
+    Html.RenderAction("InfoStudent", "Student", new { id = ViewBag.id });
 }
 <br />
 <br />
@@ -45,7 +45,7 @@
             </tbody>
 
         </table>
-        @Html.HiddenFor(model => model.MSSV, new { Value = ViewBag.Id })
+        @Html.HiddenFor(model => model.MSSV, new { Value = ViewBag.id })
         <!-- Các trường thông tin khác -->
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -55,7 +55,7 @@
     </div>
 }
 @*@{
-    Html.RenderAction("ResultSubjectRegisted", "SubjectRegisted", new { Id = ViewBag.IdStudent});
+    Html.RenderAction("ResultSubjectRegisted", "SubjectRegisted", new { Id = ViewBag.idStudent});
 }*@
 
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>

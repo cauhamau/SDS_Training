@@ -9,5 +9,6 @@ namespace Practice6a_MVC_Nhibernate.Interfaces.IServices
     internal interface IUserService:IBasicService<User>
     {
         User CheckAccountLogIn(string username, byte[] password);
+        string SaveUser(User user);
     }
 }

@@ -9,6 +9,6 @@ namespace Practice6a_MVC_Nhibernate.Interfaces.IServices
 {
     internal interface ISubjectService : IBasicService<Subject>
     {
-        IList<Subject> GetUnregistered(int Id);
+        IList<Subject> GetUnregistered(int id);
     }
 }
