@@ -1,9 +1,0 @@
-H:\InternS\Training\Practice6b_WindowsService\Practice6b_WindowsService\bin\Debug\Practice6b_WindowsService.exe.config
-H:\InternS\Training\Practice6b_WindowsService\Practice6b_WindowsService\bin\Debug\Practice6b_WindowsService.exe
-H:\InternS\Training\Practice6b_WindowsService\Practice6b_WindowsService\bin\Debug\Practice6b_WindowsService.pdb
-H:\InternS\Training\Practice6b_WindowsService\Practice6b_WindowsService\obj\Debug\Practice6b_WindowsService.csproj.AssemblyReference.cache
-H:\InternS\Training\Practice6b_WindowsService\Practice6b_WindowsService\obj\Debug\Practice6b_WindowsService.ProjectInstaller.resources
-H:\InternS\Training\Practice6b_WindowsService\Practice6b_WindowsService\obj\Debug\Practice6b_WindowsService.csproj.GenerateResource.cache
-H:\InternS\Training\Practice6b_WindowsService\Practice6b_WindowsService\obj\Debug\Practice6b_WindowsService.csproj.CoreCompileInputs.cache
-H:\InternS\Training\Practice6b_WindowsService\Practice6b_WindowsService\obj\Debug\Practice6b_WindowsService.exe
-H:\InternS\Training\Practice6b_WindowsService\Practice6b_WindowsService\obj\Debug\Practice6b_WindowsService.pdb
