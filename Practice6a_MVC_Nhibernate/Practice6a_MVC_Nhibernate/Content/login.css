@@ -1,0 +1,20 @@
+﻿.login-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%
+}
+
+.login-container {
+    background-color: #fff;
+    padding: 3rem;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+    margin-bottom: 2rem
+}
+
+@media (min-width: 768px) {
+    .login-container {
+        width: 400px !important;
+        border-radius: .25rem;
+    }
+}
